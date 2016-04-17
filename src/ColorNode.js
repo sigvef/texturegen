@@ -1,12 +1,10 @@
 (function(TextureGen) {
   'use strict';
 
-  function ColorNode() {
-    TextureGen.BaseNode.call(this);
+  function ColorNode(id) {
+    TextureGen.BaseNode.call(this, id, 'Color', []);
     this.value = {r: 0, g: 0, b: 0, a: 255};
-    this.domNode = document.createElement('div');
-    this.domNode.classList.add('node');
-    this.domNode.innerHTML = '<h1>Color</h1>' + JSON.stringify(this.getOutput());
+    this.domNode.innerHTML += JSON.stringify(this.getOutput());
   }
 
   ColorNode.prototype = Object.create(TextureGen.BaseNode.prototype, {
@@ -26,7 +24,6 @@
 
     getOutput: {
       value: function() {
-        console.log(this);
         return {
           r: this.value.r,
           g: this.value.g,

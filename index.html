@@ -39,12 +39,20 @@
 var editor = document.getElementById('editor');
 
 var nodeManager = new TextureGen.NodeManager(editor);
-
 var fillNode = nodeManager.createNode(TextureGen.FillNode);
 var colorNode = nodeManager.createNode(TextureGen.ColorNode);
 
-fillNode.setInput('color', colorNode);
-colorNode.addOutput(fillNode);
+interact('.output').draggable({autoScroll: true});
+
+interact('.input').dropzone({
+  accept: '.output',
+  ondrop: function (event) {
+    var toId = event.target.parentElement.parentElement.dataset.id;
+    var fromId = event.relatedTarget.parentElement.dataset.id;
+    var inputName = event.target.dataset.name;
+    nodeManager.connect(fromId, toId, inputName);
+  }
+});
 
 
 </script>

@@ -1,8 +1,8 @@
 (function(TextureGen) {
   'use strict';
 
-  function FillNode() {
-    TextureGen.CanvasNode.call(this, 'Fill');
+  function FillNode(id) {
+    TextureGen.CanvasNode.call(this, id, 'Fill', ['color']);
   }
 
   FillNode.prototype = Object.create(TextureGen.CanvasNode.prototype, {
@@ -14,6 +14,11 @@
         this.imageData = texturegen.fill(this.inputs['color'].getOutput());
         this.ctx.putImageData(this.imageData, 0, 0);
         this.dirty = false;
+
+        for(var key in this.outputs) {
+          this.outputs[key].dirty = true;
+          this.outputs[key].render();
+        }
       }
     }
   });
