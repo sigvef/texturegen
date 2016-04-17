@@ -46,6 +46,12 @@
     });
   }
 
+  BaseNode.prototype.getInput = function(inputName) {
+    if(this.inputs[inputName]) {
+      return this.inputs[inputName].getOutput();
+    }
+  };
+
   BaseNode.prototype.getOutput = function() {
     throw 'Not implemented.';
   };
