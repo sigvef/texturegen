@@ -10,7 +10,7 @@
 
   function ColorNode(id) {
     TextureGen.BaseNode.call(this, id, 'Color', []);
-    this.value = {r: 0, g: 0, b: 0, a: 255};
+    this.value = {r: 255, g: 255, b: 255, a: 255};
 
     var jscolor = document.createElement('input');
     jscolor.classList.add('jscolor');
