@@ -5,6 +5,7 @@
     this.nodes = {};
     this.index = 0;
     this.editorDom = editorDom;
+    this.nodeZStack = [];
   }
 
   NodeManager.prototype.createNode = function(Node, optionalId) {
@@ -14,7 +15,31 @@
     var node = new Node(id);
     this.nodes[node.id] = node;
     this.editorDom.appendChild(node.domNode);
+    this.nodeZStack.push(node);
     return node;
+  };
+
+  NodeManager.prototype.selectNode = function(id) {
+    var node = this.nodes[id];
+    for(var i = 0; i < this.nodeZStack.length; i++) {
+      if(this.nodeZStack[i] == node) {
+        break;
+      }
+    }
+    this.nodeZStack.splice(i, 1);
+    this.nodeZStack.push(node);
+    for(var key in this.nodes) {
+      this.nodes[key].domNode.classList.remove('selected');
+    }
+    this.nodes[id].domNode.classList.add('selected');
+    for(var i = 0; i < this.nodeZStack.length; i++) {
+      var domNode = this.nodeZStack[i].domNode;
+      domNode.dataset.z = i;
+      var x = domNode.dataset.x;
+      var y = domNode.dataset.y;
+      var z = domNode.dataset.z;
+      domNode.style.transform = 'translate3d(' + x + 'px, ' + y + 'px,' + z + 'px)';
+    }
   };
 
   NodeManager.prototype.disconnect = function(id, inputName) {

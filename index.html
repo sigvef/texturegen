@@ -84,13 +84,13 @@ interact('.node .title')
 
   function dragMoveListener (event) {
     var target = event.target.parentElement;
-    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+    var x = (parseFloat(target.dataset.x) || 0) + event.dx;
+    var y = (parseFloat(target.dataset.y) || 0) + event.dy;
+    var z = (parseFloat(target.dataset.z) || 0) * 100;
     target.style.webkitTransform =
-    target.style.transform =
-      'translate(' + x + 'px, ' + y + 'px)';
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
+    target.style.transform = 'translate3d(' + x + 'px, ' + y + 'px,' + z + 'px)';
+    target.dataset.x = x;
+    target.dataset.y = y;
   }
 
 var nodeClassesContainer = document.querySelector('.node-classes-container');
@@ -103,7 +103,8 @@ document.querySelector('.add-new-button').addEventListener(
 [].forEach.call(document.querySelectorAll('.ui-button-container .node-classes-container li'),
                 function(el) {
     el.addEventListener('click', function() {
-    nodeManager.createNode(TextureGen[this.dataset.type]);
+    var node = nodeManager.createNode(TextureGen[this.dataset.type]);
+    nodeManager.selectNode(node.id);
     nodeClassesContainer.style.display = 'none';
   });
 });
@@ -161,5 +162,20 @@ function renderConnectingLinesLoop() {
   renderConnectingLines();
 }
 renderConnectingLinesLoop();
+
+var selectedNode = undefined;
+
+editor.addEventListener('mousedown', function(e) {
+  console.log(e.target);
+  var target = e.target;
+  while(target != e.currentTarget) {
+    if(target.classList.contains('node')) {
+      nodeManager.selectNode(target.dataset.id);
+      return;
+    }
+    target = target.parentElement;
+  }
+});
+
 
 </script>

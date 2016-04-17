@@ -11,6 +11,7 @@ html, body {
 #editor {
   position: absolute;
   z-index: 10;
+  transform-style: preserve-3d;
 }
 
 .node {
@@ -20,6 +21,11 @@ html, body {
   padding: 15px;
   display: inline-block;
   margin: 15px;
+}
+
+.node.selected .title {
+  background: #28f;
+  color: white;
 }
 
 .node .id {
