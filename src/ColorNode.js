@@ -30,9 +30,9 @@
         this.value.b = b; 
         this.value.a = a; 
 
-        for(var i = 0; i < this.outputs.length; i++) {
-          this.outputs[i].dirty = true;
-          this.outputs[i].render();
+        for(var key in this.outputs) {
+          this.outputs[key].dirty = true;
+          this.outputs[key].render();
         }
       }
     },
