@@ -89,9 +89,8 @@ interact('.node .title')
     var target = event.target.parentElement;
     var x = (parseFloat(target.dataset.x) || 0) + event.dx;
     var y = (parseFloat(target.dataset.y) || 0) + event.dy;
-    var z = (parseFloat(target.dataset.z) || 0) * 100;
-    target.style.webkitTransform =
-    target.style.transform = 'translate3d(' + x + 'px, ' + y + 'px,' + z + 'px)';
+    target.style.left = x + 'px';
+    target.style.top = y + 'px';
     target.dataset.x = x;
     target.dataset.y = y;
   }

@@ -21,6 +21,8 @@ html, body {
   padding: 15px;
   display: inline-block;
   margin: 15px;
+  position: absolute;
+  width: 230px;
 }
 
 .node.selected .title {

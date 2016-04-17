@@ -34,11 +34,7 @@
     this.nodes[id].domNode.classList.add('selected');
     for(var i = 0; i < this.nodeZStack.length; i++) {
       var domNode = this.nodeZStack[i].domNode;
-      domNode.dataset.z = i;
-      var x = domNode.dataset.x;
-      var y = domNode.dataset.y;
-      var z = domNode.dataset.z;
-      domNode.style.transform = 'translate3d(' + x + 'px, ' + y + 'px,' + z + 'px)';
+      domNode.style.zIndex = i;
     }
   };
 
