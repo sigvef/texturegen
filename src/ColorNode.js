@@ -1,10 +1,25 @@
 (function(TextureGen) {
   'use strict';
 
+  function hexColorToRGB(hex) {
+    var r = Number.parseInt(hex.slice(0, 2), 16);
+    var g = Number.parseInt(hex.slice(2, 4), 16);
+    var b = Number.parseInt(hex.slice(4, 6), 16);
+    return {r: r, g: g, b: b};
+  }
+
   function ColorNode(id) {
     TextureGen.BaseNode.call(this, id, 'Color', []);
     this.value = {r: 0, g: 0, b: 0, a: 255};
-    this.domNode.innerHTML += JSON.stringify(this.getOutput());
+
+    var jscolor = document.createElement('input');
+    jscolor.classList.add('jscolor');
+    var that = this;
+    jscolor.addEventListener('change', function() {
+      var rgb = hexColorToRGB(jscolor.value);
+      that.setValue(rgb.r, rgb.g, rgb.b, that.getOutput().a);
+    });
+    this.domNode.appendChild(jscolor);
   }
 
   ColorNode.prototype = Object.create(TextureGen.BaseNode.prototype, {
