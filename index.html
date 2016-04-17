@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<script src=https://rawgithub.com/mrdoob/three.js/master/build/three.js></script>
+<script src=perlin.js></script>
+<script src=texturegen.js></script>
+<script src=TextureGen.js></script>
+<script src=NodeManager.js></script>
+<script src=BaseNode.js></script>
+<script src=ColorNode.js></script>
+<script src=CanvasNode.js></script>
+<script src=FillNode.js></script>
+
+<div id=editor>
+</div>
+
+<style>
+
+  html, body {
+    background: #efefef;
+    font-family: Arial;
+  }
+
+  .node {
+    border: 1px solid #ccc;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 15px;
+    display: inline-block;
+    margin: 15px;
+  }
+
+  .node canvas {
+    width: 128px;
+  }
+</style>
+
+
+<script>
+
+var editor = document.getElementById('editor');
+
+var nodeManager = new TextureGen.NodeManager(editor);
+
+var fillNode = nodeManager.createNode(TextureGen.FillNode);
+var colorNode = nodeManager.createNode(TextureGen.ColorNode);
+
+fillNode.setInput('color', colorNode);
+colorNode.addOutput(fillNode);
+
+
+</script>
