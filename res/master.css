@@ -84,7 +84,7 @@ html, body {
   color: #555;
 }
 
-.jscolor {
+input {
   border: 1px solid #ccc;
   padding: 15px;
   height : 20px;
