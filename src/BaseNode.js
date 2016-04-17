@@ -32,13 +32,16 @@
 
     this.domNode.querySelector('.id').innerText = '#' + this.id;
     this.domNode.querySelector('.title').innerText = title;
+    this.domOutput = this.domNode.querySelector('.output');
 
     var domInputs = this.domNode.querySelector('.inputs');
+    this.domInputs = {};
     for(var key in this.inputs) {
       var domInput = render('<li class=input><div class=icon>⎆</div><p class=name></p></li>');
       domInput.querySelector('.name').innerText = key;
       domInput.dataset.name = key;
       domInputs.appendChild(domInput);
+      this.domInputs[key] = domInput;
     }
 
     var that = this;

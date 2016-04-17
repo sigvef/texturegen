@@ -20,6 +20,9 @@
   <a class="add-new-button ui-button">+</a>
 </div>
 
+<canvas class=connecting-lines>
+</canvas>
+
 <div id=editor>
 </div>
 
@@ -74,5 +77,49 @@ document.querySelector('.import-button').addEventListener('click', function() {
   var json = prompt('json?');
   nodeManager.import(json);
 });
+
+
+var connectingLineCanvas = document.querySelector('.connecting-lines');
+var connectingLineCtx = connectingLineCanvas.getContext('2d');
+var connectingLines = [];
+
+function renderConnectingLines() {
+
+  connectingLineCtx.clearRect(0, 0, connectingLineCanvas.width, connectingLineCanvas.height);
+  connectingLineCtx.strokeStyle = '#555';
+  for(var id in nodeManager.nodes) {
+    var node = nodeManager.nodes[id];
+    for(var key in node.inputs) {
+      if(!node.inputs[key]) {
+        continue;
+      }
+
+      var inputRect = node.domInputs[key].getBoundingClientRect();
+      var outputRect = node.inputs[key].domOutput.getBoundingClientRect();
+      var inputX = inputRect.left;
+      var inputY = inputRect.top + inputRect.height / 2;
+      var outputX = outputRect.right;
+      var outputY = outputRect.top + outputRect.height / 2;
+      connectingLineCtx.beginPath();
+      connectingLineCtx.moveTo(inputX, inputY);
+      connectingLineCtx.lineTo(outputX, outputY);
+      connectingLineCtx.stroke();
+    }
+  }
+}
+function onResize() {
+  connectingLineCanvas.width = window.innerWidth; 
+  connectingLineCanvas.height = window.innerHeight; 
+  renderConnectingLines();
+}
+
+window.addEventListener('resize', onResize);
+onResize();
+
+function renderConnectingLinesLoop() {
+  requestAnimationFrame(renderConnectingLinesLoop);
+  renderConnectingLines();
+}
+renderConnectingLinesLoop();
 
 </script>
