@@ -169,7 +169,6 @@ renderConnectingLinesLoop();
 var selectedNode = undefined;
 
 editor.addEventListener('mousedown', function(e) {
-  console.log(e.target);
   var target = e.target;
   while(target != e.currentTarget) {
     if(target.classList.contains('node')) {
