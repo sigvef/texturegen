@@ -9,6 +9,7 @@
 
   function BaseNode(id, title, inputNames) {
     this.id = id;
+    this.dirty = true;
     if(!inputNames) {
       throw 'Need input names!';
     }
@@ -38,6 +39,11 @@
       domInput.dataset.name = key;
       domInputs.appendChild(domInput);
     }
+
+    var that = this;
+    setTimeout(function() {
+      that.render();
+    });
   }
 
   BaseNode.prototype.getOutput = function() {
