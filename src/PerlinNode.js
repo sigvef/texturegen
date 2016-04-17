@@ -16,7 +16,7 @@
         var frequency = 1 / Math.pow(2, this.getInput('freq.')) || 1 / 128;
         var octaves = this.getInput('octaves');
 
-        this.imageData = texturegen.perlin(new ImageData(512, 512), frequency, octaves);
+        this.imageData = texturegen.perlin(this.imageData, frequency, octaves);
         this.ctx.putImageData(this.imageData, 0, 0);
         this.dirty = false;
 
