@@ -22,18 +22,22 @@ html, body {
   display: inline-block;
   margin: 15px;
   position: absolute;
+  min-width: 153px;
   width: 230px;
 }
 
 .node.selected .title {
   background: #28f;
   color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .node .id {
-  float: right;
+  position: absolute;
   color: #ccc;
-  margin: -8px;
+  top: 6px;
+  right: 7px;
 }
 
 .node h1 {
@@ -44,7 +48,7 @@ html, body {
 }
 
 .node canvas {
-  width: 128px;
+  width: calc(100% - 102px);
 }
 
 .node .output {
@@ -99,6 +103,7 @@ html, body {
 
 input {
   border: 1px solid #ccc;
+  width: calc(100% - 83px);
   padding: 15px;
   height : 20px;
   display: inline-block;
