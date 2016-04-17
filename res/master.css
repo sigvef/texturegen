@@ -134,3 +134,32 @@ canvas.connecting-lines {
   left: 0;
   right: 0;
 }
+
+.node-classes-container {
+  background: white;
+  border: 1px solid #ccc;
+  margin-top: 55px;
+  margin-right: 5px;
+  display: none;
+}
+
+.node-classes-container li {
+  font-size: 20px;
+  color: #555;
+  padding: 5px 10px;
+  display: block;
+}
+
+.node-classes-container li:hover {
+  color: #fff;
+  background: #555;
+  cursor: pointer;
+}
+
+.node-classes-container li:first-child {
+  padding-top: 8px;
+}
+
+.node-classes-container li:last-child {
+  padding-bottom: 8px;
+}

@@ -30,6 +30,25 @@
   <a class="export-button ui-button">Export</a>
   <a class="import-button ui-button">Import</a>
   <a class="add-new-button ui-button">+</a>
+  <ul class=node-classes-container>
+    <li data-type=AddNode>Add</li>
+    <li data-type=BlurNode>Blur</li>
+    <li data-type=CircularGradientNode>CircularGradient</li>
+    <li data-type=CircularSineNode>CircularSine</li>
+    <li data-type=ColorNode>Color</li>
+    <li data-type=DistortXNode>DistortX</li>
+    <li data-type=EmbossNode>Emboss</li>
+    <li data-type=FillNode>Fill</li>
+    <li data-type=MotionBlurNode>MotionBlur</li>
+    <li data-type=MultiplyNode>Multiply</li>
+    <li data-type=NumberNode>Number</li>
+    <li data-type=PerlinNode>Perlin</li>
+    <li data-type=PolarNode>Polar</li>
+    <li data-type=RandomNode>Random</li>
+    <li data-type=SineNode>Sine</li>
+    <li data-type=SubtractNode>Subtract</li>
+    <li data-type=ThresholdNode>Threshold</li>
+  </ul>
 </div>
 
 <canvas class=connecting-lines>
@@ -74,10 +93,19 @@ interact('.node .title')
     target.setAttribute('data-y', y);
   }
 
+var nodeClassesContainer = document.querySelector('.node-classes-container');
 
-document.querySelector('.add-new-button').addEventListener('click', function() {
-  var nodeType = prompt('Node type?');
-  nodeManager.createNode(TextureGen[nodeType + 'Node']);
+document.querySelector('.add-new-button').addEventListener(
+    'click', function() {
+  nodeClassesContainer.style.display = nodeClassesContainer.style.display == 'block' ? 'none' : 'block';
+});
+
+[].forEach.call(document.querySelectorAll('.ui-button-container .node-classes-container li'),
+                function(el) {
+    el.addEventListener('click', function() {
+    nodeManager.createNode(TextureGen[this.dataset.type]);
+    nodeClassesContainer.style.display = 'none';
+  });
 });
 
 document.querySelector('.export-button').addEventListener('click', function() {
