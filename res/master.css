@@ -1,3 +1,8 @@
+* {
+ margin: 0;
+ padding: 0;
+}
+
 html, body {
   background: #efefef;
   font-family: Arial;
@@ -12,6 +17,71 @@ html, body {
   margin: 15px;
 }
 
+.node .id {
+  float: right;
+  color: #ccc;
+  margin: -8px;
+}
+
+.node h1 {
+  border-bottom: 1px solid #ccc;
+  background: #fafafa;
+  margin: -15px -15px 15px;
+  padding: 15px 15px 10px;
+}
+
 .node canvas {
   width: 128px;
+}
+
+.node .output {
+  float: right;
+  margin-right: -15px;
+  margin-left: 15px;
+  margin-top: 15px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  border: 1px solid #ccc;
+  border-right: 0;
+}
+
+.node .inputs {
+  float: left;
+  margin-left: -15px;
+  margin-right: 15px;
+  margin-top: 15px;
+}
+
+.node .inputs .input {
+  width: 50px;
+  height: 50px;
+  display: block;
+  border: 1px solid #ccc;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.node .inputs .input:last-child {
+  border-bottom: 1px solid #ccc;
+}
+
+.input .icon {
+  font-size: 24px;
+  text-align: center;
+  color: #555;
+}
+
+.output .icon {
+  font-size: 19px;
+  text-align: center;
+  color: #555;
+}
+
+.input .name, .output .name {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 11px;
+  font-family: monospace;
+  color: #555;
 }

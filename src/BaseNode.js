@@ -19,19 +19,21 @@
     this.outputs = {};
     this.domNode = render([
       '<div class=node>',
+      '<div class=id></div>',
       '<h1 class=title></h1>',
       '<ul class=inputs></ul>',
-      '<div class=output>Output</div>',
+      '<div class=output><div class=icon>▷</div><p class=name>Output</p></div>',
       '</div>'
     ].join(''));
 
     this.domNode.dataset.id = this.id;
 
+    this.domNode.querySelector('.id').innerText = '#' + this.id;
     this.domNode.querySelector('.title').innerText = title;
 
     var domInputs = this.domNode.querySelector('.inputs');
     for(var key in this.inputs) {
-      var domInput = render('<li class=input><p class=name></p></li>');
+      var domInput = render('<li class=input><div class=icon>⎆</div><p class=name></p></li>');
       domInput.querySelector('.name').innerText = key;
       domInput.dataset.name = key;
       domInputs.appendChild(domInput);
@@ -45,17 +47,6 @@
   BaseNode.prototype.render = function() {
     throw 'Not implemented.';
   };
-
-  BaseNode.prototype.setInput = function(key, value) {
-    this.inputs[key] = value; 
-    this.dirty = true;
-    var that = this;
-    that.render();
-  };
-
-  BaseNode.prototype.addOutput = function(output) {
-    this.outputs[this.outputs.length] = output;
-  }
 
   global.TextureGen.BaseNode = BaseNode;
 })(this);
