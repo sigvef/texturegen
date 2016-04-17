@@ -13,7 +13,11 @@
 <script src=src/FillNode.js></script>
 <script src=src/PerlinNode.js></script>
 
-<a class="add-new-button">+</a>
+<div class=ui-button-container>
+  <a class="export-button ui-button">Export</a>
+  <a class="import-button ui-button">Import</a>
+  <a class="add-new-button ui-button">+</a>
+</div>
 
 <div id=editor>
 </div>
@@ -23,8 +27,6 @@
 var editor = document.getElementById('editor');
 
 var nodeManager = new TextureGen.NodeManager(editor);
-var fillNode = nodeManager.createNode(TextureGen.FillNode);
-var colorNode = nodeManager.createNode(TextureGen.ColorNode);
 
 interact('.output').draggable({autoScroll: true});
 
@@ -60,6 +62,16 @@ interact('.node .title')
 document.querySelector('.add-new-button').addEventListener('click', function() {
   var nodeType = prompt('Node type?');
   nodeManager.createNode(TextureGen[nodeType + 'Node']);
+});
+
+document.querySelector('.export-button').addEventListener('click', function() {
+  console.log(nodeManager.export());
+  alert('copy paste it from browser console');
+});
+
+document.querySelector('.import-button').addEventListener('click', function() {
+  var json = prompt('json?');
+  nodeManager.import(json);
 });
 
 </script>

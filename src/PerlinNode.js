@@ -3,6 +3,7 @@
 
   function PerlinNode(id) {
     TextureGen.CanvasNode.call(this, id, 'Perlin', ['freq.', 'octaves']);
+    this.type = 'PerlinNode';
   }
 
   PerlinNode.prototype = Object.create(TextureGen.CanvasNode.prototype, {

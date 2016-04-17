@@ -1,34 +1,51 @@
-(function(TextureGen) {
+(function(TextureGen, jscolor) {
   'use strict';
 
   function hexColorToRGB(hex) {
     var r = Number.parseInt(hex.slice(0, 2), 16);
     var g = Number.parseInt(hex.slice(2, 4), 16);
     var b = Number.parseInt(hex.slice(4, 6), 16);
-    return {r: r, g: g, b: b};
+    return {r: r, g: g, b: b, a: 255};
+  }
+
+  function leftpad(hex) {
+    return hex.length == 1 ? '0' + hex : hex;
+  }
+
+  function RGBColorToHex(rgb) {
+    var r = leftpad(rgb.r.toString(16));
+    var g = leftpad(rgb.g.toString(16));
+    var b = leftpad(rgb.b.toString(16));
+    return (r + g + b).toUpperCase();
   }
 
   function ColorNode(id) {
     TextureGen.BaseNode.call(this, id, 'Color', []);
+    this.type = 'ColorNode';
     this.value = {r: 255, g: 255, b: 255, a: 255};
 
-    var jscolor = document.createElement('input');
-    jscolor.classList.add('jscolor');
+    var input = document.createElement('input');
+    input.classList.add('jscolor');
     var that = this;
-    jscolor.addEventListener('change', function() {
-      var rgb = hexColorToRGB(jscolor.value);
-      that.setValue(rgb.r, rgb.g, rgb.b, that.getOutput().a);
+    this.input = input;
+    input.addEventListener('change', function() {
+      that.setValue(input.value);
     });
-    this.domNode.appendChild(jscolor);
+    new jscolor(this.input);
+    this.domNode.appendChild(input);
   }
 
   ColorNode.prototype = Object.create(TextureGen.BaseNode.prototype, {
     setValue: {
-      value: function(r, g, b, a) {
-        this.value.r = r; 
-        this.value.g = g; 
-        this.value.b = b; 
-        this.value.a = a; 
+      value: function(color) {
+        if(typeof(color) == 'string') {
+          color = hexColorToRGB(color);
+        }
+        this.value.r = color.r; 
+        this.value.g = color.g; 
+        this.value.b = color.b; 
+        this.value.a = color.a; 
+        this.input.value = RGBColorToHex(this.value);
 
         for(var key in this.outputs) {
           this.outputs[key].dirty = true;
@@ -50,4 +67,4 @@
   });
 
   TextureGen.ColorNode = ColorNode;
-})(TextureGen);
+})(TextureGen, jscolor);

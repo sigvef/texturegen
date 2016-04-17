@@ -91,21 +91,32 @@ input {
   display: inline-block;
 }
 
-.add-new-button {
-  font-size: 40px;
+.ui-button-container {
   position: fixed;
-  right: 15px;
+  right: 10px;
   top: 15px;
+}
+
+.ui-button {
+  float:right;
   border: 1px solid #ccc;
   background: white;
-  width: 50px;
   height: 50px;
   text-align: center;
   line-height: 50px;
   cursor: pointer;
   color: #555;
+  padding: 0 15px;
+  font-size: 20px;
+  margin-right: 5px;
 }
 
-.add-new-button:hover {
+.add-new-button {
+  font-size: 40px;
+  width: 50px;
+  padding: 0;
+}
+
+.ui-button:hover {
   color: #000;
 }

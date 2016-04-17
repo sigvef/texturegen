@@ -3,6 +3,7 @@
 
   function CanvasNode(id, title, inputNames) {
     TextureGen.BaseNode.call(this, id, title, inputNames);
+    this.type = 'CanvasNode';
     this.canvas = document.createElement('canvas');
     this.canvas.width = 512;
     this.canvas.height = 512;

@@ -8,6 +8,7 @@
   }
 
   function BaseNode(id, title, inputNames) {
+    this.type = 'BaseNode';
     this.id = id;
     this.dirty = true;
     if(!inputNames) {
@@ -57,7 +58,7 @@
   };
 
   BaseNode.prototype.render = function() {
-    throw 'Not implemented.';
+    this.dirty = false;
   };
 
   global.TextureGen.BaseNode = BaseNode;

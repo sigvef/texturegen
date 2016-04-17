@@ -3,6 +3,7 @@
 
   function FillNode(id) {
     TextureGen.CanvasNode.call(this, id, 'Fill', ['color']);
+    this.type = 'FillNode';
   }
 
   FillNode.prototype = Object.create(TextureGen.CanvasNode.prototype, {
