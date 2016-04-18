@@ -1,4 +1,4 @@
-(function(TextureGen, jscolor) {
+(function(TextureGen, $) {
   'use strict';
 
   function hexColorToRGB(hex) {
@@ -22,28 +22,26 @@
   class ColorNode extends TextureGen.BaseNode {
     constructor(id) {
       super(id, 'Color', []);
-      this.value = new TextureGen.ColorValue(0, 0, 0, 255);
 
-      var input = document.createElement('input');
-      input.classList.add('jscolor');
+      var colorPickerNode = document.createElement('div');
       var that = this;
-      this.input = input;
-      input.addEventListener('change', function() {
-        that.setValue(input.value);
+      this.domNode.appendChild(colorPickerNode);
+      this.colorPicker = $(colorPickerNode).ColorPicker({
+        flat: true,
+        onChange: function(hsb, hex, rgb) {
+          that.setValue(hex);
+        }
       });
-      new jscolor(this.input);
-      this.domNode.appendChild(input);
+      this.domNode.style.minWidth = '407px';
+      this.value = new TextureGen.ColorValue(255, 0, 0, 255);
     }
 
     setValue(color) {
       if(typeof(color) == 'string') {
         color = hexColorToRGB(color);
       }
-      this.value.r = color.r;
-      this.value.g = color.g;
-      this.value.b = color.b;
-      this.value.a = color.a;
-      this.input.value = RGBColorToHex(this.value);
+      this.value = color.clone();
+      this.colorPicker.ColorPickerSetColor(RGBColorToHex(this.value));
 
       for(var key in this.outputs) {
         this.outputs[key].dirty = true;
@@ -57,4 +55,4 @@
   }
 
   TextureGen.ColorNode = ColorNode;
-})(TextureGen, jscolor);
+})(TextureGen, jQuery);

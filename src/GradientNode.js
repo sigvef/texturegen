@@ -1,4 +1,4 @@
-(function(TextureGen, jscolor, $) {
+(function(TextureGen, $) {
   'use strict';
 
   class GradientNode extends TextureGen.BaseNode {
@@ -57,4 +57,4 @@
   }
 
   TextureGen.GradientNode = GradientNode;
-})(TextureGen, jscolor, jQuery);
+})(TextureGen, jQuery);
