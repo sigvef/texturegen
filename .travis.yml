@@ -1,0 +1,5 @@
+script: make test
+after_success: make gh-pages
+branches:
+    only:
+        - master
