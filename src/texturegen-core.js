@@ -56,6 +56,16 @@ var texturegen = {};
     return imageData;
   }
 
+  texturegen.mask = function mask(imageDataA, imageDataB, imageDataMask) {
+    var imageData = clone(imageDataA);
+    for (var i = 0; i < imageData.data.length; i++) {
+      imageData.data[i] = lerp(imageDataA.data[i],
+                               imageDataB.data[i],
+                               imageDataMask.data[i] / 255) | 0;
+    }
+    return imageData;
+  }
+
   texturegen.subtract = function add(imageDataA, imageDataB) {
     var imageData = clone(imageDataA);
     for (var i = 0; i < imageData.data.length; i++) {
