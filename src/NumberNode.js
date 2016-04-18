@@ -4,21 +4,28 @@
   class NumberNode extends TextureGen.BaseNode {
     constructor(id) {
       super(id, 'Number', []);
-      this.value = {r: 255, g: 255, b: 255, a: 255};
 
       var input = document.createElement('input');
       input.type = 'number';
       this.input = input;
       var that = this;
-      input.addEventListener('change', function() {
+      input.addEventListener('input', function() {
         that.setValue(input.value);
       });
       this.domNode.appendChild(input);
+
+      this.value = this.input.value = 1;
     }
 
     setValue(value) {
       this.value = value;
+
+      var start = this.input.selectionStart,
+          end = this.input.selectionEnd;
+
       this.input.value = value;
+
+      this.input.setSelectionRange(start, end);
 
       for(var key in this.outputs) {
         this.outputs[key].dirty = true;
