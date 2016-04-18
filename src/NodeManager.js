@@ -57,7 +57,7 @@
     toNode.render();
   };
 
-  NodeManager.prototype.export = function() {
+  NodeManager.prototype.exportData = function() {
     var jsonNodes = [];
     for(var key in this.nodes) {
       var node = this.nodes[key];
@@ -79,7 +79,7 @@
     return JSON.stringify(jsonNodes);
   };
 
-  NodeManager.prototype.import = function(json) {
+  NodeManager.prototype.importData = function(json) {
     this.nodes = [];
     this.editorDom.innerHTML = '';
     var serializedNodes = JSON.parse(json);
