@@ -90,6 +90,10 @@ interact('.input').dropzone({
     var inputName = event.target.dataset.name;
     nodeManager.connect(fromId, toId, inputName);
   }
+}).on('tap', function (event) {
+  var toId = event.currentTarget.parentElement.parentElement.dataset.id;
+  var inputName = event.currentTarget.dataset.name;
+  nodeManager.disconnect(toId, inputName);
 });
 
 
