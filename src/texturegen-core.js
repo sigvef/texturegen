@@ -282,4 +282,21 @@ var texturegen = {};
     return resultImageData;
   };
 
+  texturegen.checker = function(imageData) {
+    imageData = clone(imageData);
+    forEachPixel(imageData, function(x, y) {
+      var adjustedX = x - imageData.width / 2 | 0;
+      var adjustedY = y - imageData.height / 2 | 0;
+      var value = ((adjustedX > 0 && adjustedY <= 0) ||
+                   (adjustedX <= 0 && adjustedY > 0)) * 255 | 0;
+      return {
+        r: value,
+        g: value,
+        b: value,
+        a: 255
+      };
+    });
+    return imageData;
+  }
+
 })();
