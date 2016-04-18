@@ -355,4 +355,17 @@ var texturegen = {};
     return ctx.getImageData(0, 0, imageData.width, imageData.height);
   };
 
+  texturegen.invert = function(imageData) {
+    imageData = clone(imageData);
+    forEachPixel(imageData, function(x, y, r, g, b, a) {
+      return {
+        r: 255 - r,
+        g: 255 - g,
+        b: 255 - b,
+        a: a
+      };
+    });
+    return imageData;
+  }
+
 })();
