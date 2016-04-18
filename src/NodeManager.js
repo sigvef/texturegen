@@ -7,6 +7,7 @@
       this.index = 0;
       this.editorDom = editorDom;
       this.nodeZStack = [];
+      this.selectedNode = -1;
     }
 
     createNode(Node, optionalId) {
@@ -55,6 +56,7 @@
         this.moveNodeToFront(this.nodes[id].outputs[key].id);
       }
       this.moveNodeToFront(id, true);
+      this.selectedNode = id;
     }
 
     disconnect(id, inputName) {
@@ -84,6 +86,9 @@
         serializable.type = node.constructor.name;
         serializable.id = node.id;
         serializable.inputs = {};
+        serializable.left = node.domNode.style.left;
+        serializable.top = node.domNode.style.top;
+        serializable.width = node.domNode.style.width;
         var hasNoInputs = true;
         for(var key in node.inputs) {
           hasNoInputs = false;
@@ -95,24 +100,30 @@
         }
         jsonNodes.push(serializable);
       }
-      return JSON.stringify(jsonNodes);
+      return JSON.stringify({
+        nodes: jsonNodes,
+        selectedNode: this.selectedNode,
+        zStack: this.nodeZStack.map(function(node) {
+          return node.id;
+        })
+      });
     }
 
     importData(json) {
       this.nodes = [];
       this.editorDom.innerHTML = '';
-      var serializedNodes = JSON.parse(json);
+      var data = JSON.parse(json);
       var highestId = 0;
-      for(var i = 0; i < serializedNodes.length; i++) {
-        var serializedNode = serializedNodes[i];
+      for(var i = 0; i < data.nodes.length; i++) {
+        var serializedNode = data.nodes[i];
         var node = this.createNode(global.TextureGen[serializedNode.type], serializedNode.id);
         if(node.id > highestId) {
           highestId = node.id;
         }
       }
       this.index = highestId + 1;
-      for(var i = 0; i < serializedNodes.length; i++) {
-        var serializedNode = serializedNodes[i];
+      for(var i = 0; i < data.nodes.length; i++) {
+        var serializedNode = data.nodes[i];
         var node = this.nodes[serializedNode.id];
         if(serializedNode.value) {
           node.setValue(serializedNode.value);
@@ -120,9 +131,17 @@
         for(var key in serializedNode.inputs) {
           this.connect(serializedNode.inputs[key], node.id, key);
         }
+        node.domNode.style.left = serializedNode.left;
+        node.domNode.style.top = serializedNode.top;
+        node.domNode.style.width = serializedNode.width;
         node.dirty = true;
         node.render();
       }
+      this.selectNode(data.selectedNode);
+      var that = this;
+      this.nodeZStack = data.zStack.map(function(id) {
+        return that.nodes[id];
+      });
     }
   }
 
