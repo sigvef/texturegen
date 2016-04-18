@@ -20,12 +20,9 @@
     setValue(value) {
       this.value = value;
 
-      var start = this.input.selectionStart,
-          end = this.input.selectionEnd;
-
-      this.input.value = value;
-
-      this.input.setSelectionRange(start, end);
+      if (this.input.value != value) {
+        this.input.value = value;
+      }
 
       for(var key in this.outputs) {
         this.outputs[key].dirty = true;
