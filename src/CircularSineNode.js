@@ -4,7 +4,6 @@
   class CircularSineNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'CircularSine', ['x', 'y', 'periods']);
-      this.type = 'CircularSineNode';
     }
 
     render() {

@@ -4,7 +4,6 @@
   class SubtractNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Subtract', ['A', 'B']);
-      this.type = 'SubtractNode';
     }
 
     render() {

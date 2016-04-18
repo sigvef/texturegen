@@ -4,7 +4,6 @@
   class RandomNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Random', []);
-      this.type = 'RandomNode';
     }
 
     render() {

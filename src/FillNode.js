@@ -4,7 +4,6 @@
   class FillNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Fill', ['color']);
-      this.type = 'FillNode';
     }
 
     render() {

@@ -4,7 +4,6 @@
   class RotateNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Rotate', ['Image', 'Repeat']);
-      this.type = 'RotateNode';
     }
 
     render() {

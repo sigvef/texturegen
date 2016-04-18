@@ -4,7 +4,6 @@
   class EmbossNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Emboss', ['Image']);
-      this.type = 'EmbossNode';
     }
 
     render() {

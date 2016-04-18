@@ -4,7 +4,6 @@
   class NumberNode extends TextureGen.BaseNode {
     constructor(id) {
       super(id, 'Number', []);
-      this.type = 'NumberNode';
       this.value = {r: 255, g: 255, b: 255, a: 255};
 
       var input = document.createElement('input');

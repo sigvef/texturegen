@@ -4,7 +4,6 @@
   class ThresholdNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Threshold', ['Image', 'Threshold']);
-      this.type = 'ThresholdNode';
     }
 
     render() {

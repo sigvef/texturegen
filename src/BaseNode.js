@@ -9,7 +9,6 @@
 
   class BaseNode {
     constructor(id, title, inputNames) {
-      this.type = 'BaseNode';
       this.id = id;
       this.dirty = true;
       if(!inputNames) {

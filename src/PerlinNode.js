@@ -4,7 +4,6 @@
   class PerlinNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Perlin', ['freq.', 'octaves']);
-      this.type = 'PerlinNode';
     }
 
     render() {

@@ -4,7 +4,6 @@
   class CheckerNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Checker', []);
-      this.type = 'CheckerNode';
     }
 
     render() {
