@@ -8,6 +8,28 @@
       this.editorDom = editorDom;
       this.nodeZStack = [];
       this.selectedNode = -1;
+
+      var that = this;
+      function loadStoreDirtyCheckerLoop() {
+        for(var key in that.nodes) {
+          var node = that.nodes[key];
+          if(node.constructor.name != 'LoadStoreNode') {
+            continue;
+          }
+          if(node.input &&
+             TextureGen.LoadStore[node.input.value] &&
+             TextureGen.LoadStore[node.input.value].updated) {
+            TextureGen.LoadStore[node.input.value].updated = false;
+            node.dirty = true;
+            node.render();
+            /* break after first found dirty load node to give
+             * control back to the browser as soon as possible. */
+            break;
+          }
+        }
+        requestAnimationFrame(loadStoreDirtyCheckerLoop);
+      }
+      requestAnimationFrame(loadStoreDirtyCheckerLoop);
     }
 
     createNode(Node, optionalId) {
