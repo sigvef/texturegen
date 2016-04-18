@@ -19,52 +19,48 @@
     return (r + g + b).toUpperCase();
   }
 
-  function ColorNode(id) {
-    TextureGen.BaseNode.call(this, id, 'Color', []);
-    this.type = 'ColorNode';
-    this.value = {r: 255, g: 255, b: 255, a: 255};
+  class ColorNode extends TextureGen.BaseNode {
+    constructor(id) {
+      super(id, 'Color', []);
+      this.type = 'ColorNode';
+      this.value = {r: 255, g: 255, b: 255, a: 255};
 
-    var input = document.createElement('input');
-    input.classList.add('jscolor');
-    var that = this;
-    this.input = input;
-    input.addEventListener('change', function() {
-      that.setValue(input.value);
-    });
-    new jscolor(this.input);
-    this.domNode.appendChild(input);
-  }
+      var input = document.createElement('input');
+      input.classList.add('jscolor');
+      var that = this;
+      this.input = input;
+      input.addEventListener('change', function() {
+        that.setValue(input.value);
+      });
+      new jscolor(this.input);
+      this.domNode.appendChild(input);
+    }
 
-  ColorNode.prototype = Object.create(TextureGen.BaseNode.prototype, {
-    setValue: {
-      value: function(color) {
-        if(typeof(color) == 'string') {
-          color = hexColorToRGB(color);
-        }
-        this.value.r = color.r; 
-        this.value.g = color.g; 
-        this.value.b = color.b; 
-        this.value.a = color.a; 
-        this.input.value = RGBColorToHex(this.value);
-
-        for(var key in this.outputs) {
-          this.outputs[key].dirty = true;
-          this.outputs[key].render();
-        }
+    setValue(color) {
+      if(typeof(color) == 'string') {
+        color = hexColorToRGB(color);
       }
-    },
+      this.value.r = color.r;
+      this.value.g = color.g;
+      this.value.b = color.b;
+      this.value.a = color.a;
+      this.input.value = RGBColorToHex(this.value);
 
-    getOutput: {
-      value: function() {
-        return {
-          r: this.value.r,
-          g: this.value.g,
-          b: this.value.b,
-          a: this.value.a
-        };
+      for(var key in this.outputs) {
+        this.outputs[key].dirty = true;
+        this.outputs[key].render();
       }
     }
-  });
+
+    getOutput() {
+      return {
+        r: this.value.r,
+        g: this.value.g,
+        b: this.value.b,
+        a: this.value.a
+      };
+    }
+  }
 
   TextureGen.ColorNode = ColorNode;
 })(TextureGen, jscolor);
