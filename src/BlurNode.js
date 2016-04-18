@@ -4,7 +4,6 @@
   class BlurNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Blur', ['Image']);
-      this.type = 'BlurNode';
     }
 
     render() {

@@ -4,7 +4,6 @@
   class CanvasNode extends TextureGen.BaseNode {
     constructor(id, title, inputNames) {
       super(id, title, inputNames);
-      this.type = 'CanvasNode';
       this.canvas = document.createElement('canvas');
       this.canvas.width = 512;
       this.canvas.height = 512;

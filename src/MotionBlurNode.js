@@ -4,7 +4,6 @@
   class MotionBlurNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'MotionBlur', ['Image', 'Intensity']);
-      this.type = 'MotionBlurNode';
     }
 
     render() {

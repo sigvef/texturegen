@@ -4,7 +4,6 @@
   class MultiplyNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Multiply', ['A', 'B']);
-      this.type = 'MultiplyNode';
     }
 
     render() {

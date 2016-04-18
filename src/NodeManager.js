@@ -63,7 +63,7 @@
       for(var key in this.nodes) {
         var node = this.nodes[key];
         var serializable = {};
-        serializable.type = node.type;
+        serializable.type = node.constructor.name;
         serializable.id = node.id;
         serializable.inputs = {};
         var hasNoInputs = true;

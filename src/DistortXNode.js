@@ -4,7 +4,6 @@
   class DistortXNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'DistortX', ['Image', 'Map', 'Amount']);
-      this.type = 'DistortXNode';
     }
 
     render() {

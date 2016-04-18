@@ -4,7 +4,6 @@
   class PolarNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Polar', ['Image']);
-      this.type = 'PolarNode';
     }
 
     render() {

@@ -39,7 +39,6 @@
         'alphamap',
         'repeat'
       ]);
-      this.type = 'CubePreviewNode';
 
       this.map = makeMapBundle();
       this.lightMap = makeMapBundle();

@@ -4,7 +4,6 @@
   class AddNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Add', ['A', 'B']);
-      this.type = 'AddNode';
     }
 
     render() {

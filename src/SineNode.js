@@ -4,7 +4,6 @@
   class SineNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Sine', ['periods']);
-      this.type = 'SineNode';
     }
 
     render() {

@@ -4,7 +4,6 @@
   class CircularGradientNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'CircularGradient', ['x', 'y', 'radius']);
-      this.type = 'CircularGradientNode';
     }
 
     render() {
