@@ -21,7 +21,17 @@
     }
 
     setValue(gradient) {
-      this.value = gradient;
+      if (gradient.constructor.name == 'GradientValue') {
+        this.value = gradient;
+      } else {
+        this.value = new TextureGen.GradientValue(
+          gradient.x0,
+          gradient.y0,
+          gradient.x1,
+          gradient.y1,
+          gradient.stops
+        );
+      }
       this.input.value = JSON.stringify(gradient.stops);
 
       for(var key in this.outputs) {
