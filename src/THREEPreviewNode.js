@@ -25,9 +25,19 @@
     return bundle.texture;
   }
 
-  class CubePreviewNode extends TextureGen.CanvasNode {
+  class THREEPreviewNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'CubePreview', [
+      super(id, 'THREEPreview', [
+        new TextureGen.ChoiceInput({
+          name: 'geometry',
+          choices: [
+            {name: 'Box', value: 'BoxGeometry', selected: true},
+            {name: 'Sphere', value: 'SphereGeometry'},
+            {name: 'Cylinder', value: 'CylinderGeometry'},
+            {name: 'Torus', value: 'TorusGeometry'},
+            {name: 'TorusKnot', value: 'TorusKnotGeometry'},
+          ]
+        }),
         new TextureGen.GraphInput({name: 'map'}),
         new TextureGen.GraphInput({name: 'lightmap'}),
         new TextureGen.GraphInput({name: 'aomap'}),
@@ -62,10 +72,10 @@
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
       this.camera.position.z = 500;
-      this.cube = new THREE.Mesh(
+      this.model = new THREE.Mesh(
           new THREE.BoxGeometry(200, 200, 200),
           new THREE.MeshStandardMaterial());
-      this.scene.add(this.cube);
+      this.scene.add(this.model);
       var light = new THREE.SpotLight(0xFFFFFF, 1);
       light.position.set(500, 500, 500);
       light.lookAt(new THREE.Vector3(0, 0, 0));
@@ -74,13 +84,13 @@
       sun.position.set(0, 1, 1);
       this.scene.add(sun);
       this.scene.add(new THREE.AmbientLight(0x222222));
-      this.cube.rotation.set(1, 1, 1);
+      this.model.rotation.set(1, 1, 1);
 
       var that = this;
       function internalRenderLoop() {
           requestAnimationFrame(internalRenderLoop);
-          that.cube.rotation.x += 0.01;
-          that.cube.rotation.y += 0.02;
+          that.model.rotation.x += 0.01;
+          that.model.rotation.y += 0.02;
           that.renderer.render(that.scene, that.camera);
           that.ctx.drawImage(that.renderer.domElement, 0, 0);
       }
@@ -112,7 +122,30 @@
       material.alphaMap = updateMapBundle(
           this.alphaMap, this.getInput('alphamap'), repeat);
 
-      this.cube.material = material;
+      this.model.material = material;
+
+      var geometryName = this.getInput('geometry');
+      switch (geometryName) {
+        case 'BoxGeometry':
+          var geometry = new THREE.BoxGeometry(200, 200, 200);
+          break;
+        case 'SphereGeometry':
+          var geometry = new THREE.SphereGeometry(100, 32, 32);
+          break;
+        case 'CylinderGeometry':
+          var geometry = new THREE.CylinderGeometry(100, 100, 200, 32);
+          break;
+        case 'TorusGeometry':
+          var geometry = new THREE.TorusGeometry(100, 40, 16, 32);
+          break;
+        case 'TorusKnotGeometry':
+          var geometry = new THREE.TorusKnotGeometry();
+          break;
+        default:
+          var geometry = new THREE.BoxGeometry(200, 200, 200);
+      }
+
+      this.model.geometry = geometry;
 
       this.ctx.drawImage(this.renderer.domElement, 0, 0);
       this.imageData = this.ctx.getImageData(0, 0, 512, 512);
@@ -125,5 +158,5 @@
     }
   }
 
-  TextureGen.CubePreviewNode = CubePreviewNode;
+  TextureGen.THREEPreviewNode = THREEPreviewNode;
 })(TextureGen, THREE);
