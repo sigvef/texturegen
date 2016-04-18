@@ -47,8 +47,13 @@ html, body {
   padding: 15px 15px 10px;
 }
 
-.node canvas {
+.node > canvas {
   width: calc(100% - 102px);
+}
+
+.node .gradient-widget-wrapper {
+  width: 500px;
+  height: 35px;
 }
 
 .node .output {
