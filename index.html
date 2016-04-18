@@ -134,13 +134,13 @@ document.querySelector('.add-new-button').addEventListener(
 });
 
 document.querySelector('.export-button').addEventListener('click', function() {
-  console.log(nodeManager.export());
+  console.log(nodeManager.exportData());
   alert('copy paste it from browser console');
 });
 
 document.querySelector('.import-button').addEventListener('click', function() {
   var json = prompt('json?');
-  nodeManager.import(json);
+  nodeManager.importData(json);
 });
 
 
