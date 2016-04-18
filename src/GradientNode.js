@@ -10,9 +10,9 @@
       var that = this;
       this.input = input;
       input.addEventListener('change', function() {
-        that.setValue(input.value);
+        that.setValue(new TextureGen.GradientValue(0, 0, 512, 0, JSON.parse(input.value)));
       });
-      this.setValue(JSON.stringify([
+      this.setValue(new TextureGen.GradientValue(0, 0, 512, 0, [
         {offset: 0, color: 'red'},
         {offset: 0.7, color: 'orange'},      
         {offset: 1, color: 'white'}
@@ -22,7 +22,7 @@
 
     setValue(gradient) {
       this.value = gradient;
-      this.input.value = gradient;
+      this.input.value = JSON.stringify(gradient.stops);
 
       for(var key in this.outputs) {
         this.outputs[key].dirty = true;
@@ -31,7 +31,7 @@
     }
 
     getOutput() {
-      return this.value;
+      return this.value.clone();
     }
   }
 

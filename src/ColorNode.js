@@ -5,7 +5,7 @@
     var r = Number.parseInt(hex.slice(0, 2), 16);
     var g = Number.parseInt(hex.slice(2, 4), 16);
     var b = Number.parseInt(hex.slice(4, 6), 16);
-    return {r: r, g: g, b: b, a: 255};
+    return new TextureGen.ColorValue(r, g, b, 255);
   }
 
   function leftpad(hex) {
@@ -22,7 +22,7 @@
   class ColorNode extends TextureGen.BaseNode {
     constructor(id) {
       super(id, 'Color', []);
-      this.value = {r: 255, g: 255, b: 255, a: 255};
+      this.value = new TextureGen.ColorValue(0, 0, 0, 255);
 
       var input = document.createElement('input');
       input.classList.add('jscolor');
@@ -52,12 +52,7 @@
     }
 
     getOutput() {
-      return {
-        r: this.value.r,
-        g: this.value.g,
-        b: this.value.b,
-        a: this.value.a
-      };
+      return this.value.clone();
     }
   }
 

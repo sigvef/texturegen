@@ -11,7 +11,7 @@
         return;
       }
       var color = this.inputs.color ? this.inputs.color.getOutput()
-                                       : {r: 0, g: 0, b: 0, a: 255};
+                                    : new TextureGen.ColorValue(0, 0, 0, 255);
       this.imageData = texturegen.fill(color);
       this.ctx.putImageData(this.imageData, 0, 0);
       this.dirty = false;
