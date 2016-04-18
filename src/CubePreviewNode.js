@@ -69,6 +69,16 @@
     this.scene.add(sun);
     this.scene.add(new THREE.AmbientLight(0x222222));
     this.cube.rotation.set(1, 1, 1);
+
+    var that = this;
+    function internalRenderLoop() {
+        requestAnimationFrame(internalRenderLoop);
+        that.cube.rotation.x += 0.01;
+        that.cube.rotation.y += 0.02;
+        that.renderer.render(that.scene, that.camera);
+        that.ctx.drawImage(that.renderer.domElement, 0, 0);
+    }
+    internalRenderLoop();
   }
 
   CubePreviewNode.prototype = Object.create(TextureGen.CanvasNode.prototype, {
@@ -99,7 +109,6 @@
             this.alphaMap, this.getInput('alphamap'), repeat);
 
         this.cube.material = material;
-        this.renderer.render(this.scene, this.camera);
 
         this.ctx.drawImage(this.renderer.domElement, 0, 0);
         this.imageData = this.ctx.getImageData(0, 0, 512, 512);
