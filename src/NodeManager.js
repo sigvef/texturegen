@@ -20,7 +20,7 @@
       return node;
     }
 
-    selectNode(id) {
+    moveNodeToFront(id, shouldUpdateCss) {
       var node = this.nodes[id];
       for(var i = 0; i < this.nodeZStack.length; i++) {
         if(this.nodeZStack[i] == node) {
@@ -29,14 +29,32 @@
       }
       this.nodeZStack.splice(i, 1);
       this.nodeZStack.push(node);
+      if(shouldUpdateCss) {
+        for(var i = 0; i < this.nodeZStack.length; i++) {
+          var domNode = this.nodeZStack[i].domNode;
+          domNode.style.zIndex = i;
+        }
+      }
+    }
+
+    selectNode(id) {
       for(var key in this.nodes) {
         this.nodes[key].domNode.classList.remove('selected');
       }
       this.nodes[id].domNode.classList.add('selected');
-      for(var i = 0; i < this.nodeZStack.length; i++) {
-        var domNode = this.nodeZStack[i].domNode;
-        domNode.style.zIndex = i;
+      for(var key in this.nodes[id].inputs) {
+        if(!this.nodes[id].inputs[key]) {
+          continue;
+        }
+        this.moveNodeToFront(this.nodes[id].inputs[key].id);
       }
+      for(var key in this.nodes[id].outputs) {
+        if(!this.nodes[id].outputs[key]) {
+          continue;
+        }
+        this.moveNodeToFront(this.nodes[id].outputs[key].id);
+      }
+      this.moveNodeToFront(id, true);
     }
 
     disconnect(id, inputName) {
