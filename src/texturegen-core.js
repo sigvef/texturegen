@@ -320,6 +320,20 @@ var texturegen = {};
     return imageData;
   }
 
+  texturegen.rect = function(imageData, x, y, w, h, fillStyle, strokeStyle) {
+    imageData = clone(imageData);
+    var tmpCanvas = document.createElement('canvas');
+    tmpCanvas.width = imageData.width;
+    tmpCanvas.height = imageData.height;
+    var tmpCtx = tmpCanvas.getContext('2d');
+    tmpCtx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
+    tmpCtx.fillStyle = fillStyle;
+    tmpCtx.strokeStyle = strokeStyle;
+    tmpCtx.fillRect(x, y, w, h);
+    tmpCtx.strokeRect(x, y, w, h);
+    return tmpCtx.getImageData(0, 0, imageData.width, imageData.height);
+  }
+
   texturegen.rotate = function(imageData, rotateRepeat) {
     rotateRepeat = rotateRepeat || 1;
     imageData = clone(imageData);
