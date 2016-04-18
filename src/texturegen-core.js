@@ -48,6 +48,17 @@ var texturegen = {};
     return imageData;
   }
 
+  texturegen.colorize = function add(imageData, gradientImageData) {
+    var resultImageData = clone(imageData);
+    for (var i = 0; i < imageData.data.length; i += 4) {
+      resultImageData.data[i] = gradientImageData.data[imageData.data[i] * 4];
+      resultImageData.data[i + 1] = gradientImageData.data[imageData.data[i] * 4 + 1];
+      resultImageData.data[i + 2] = gradientImageData.data[imageData.data[i] * 4 + 2];
+      resultImageData.data[i + 3] = gradientImageData.data[imageData.data[i] * 4 + 3];
+    }
+    return resultImageData;
+  }
+
   texturegen.add = function add(imageDataA, imageDataB) {
     var imageData = clone(imageDataA);
     for (var i = 0; i < imageData.data.length; i++) {
