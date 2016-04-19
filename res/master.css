@@ -116,6 +116,10 @@ input {
   display: inline-block;
 }
 
+input.short {
+  width: calc(100% - 134px);
+}
+
 .ui-button-container {
   position: fixed;
   right: 10px;
