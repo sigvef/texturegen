@@ -36,8 +36,8 @@ html, body {
 .node .id {
   position: absolute;
   color: #ccc;
-  top: 6px;
-  right: 7px;
+  top: 15px;
+  right: 10px;
 }
 
 .node h1 {
@@ -45,6 +45,8 @@ html, body {
   background: #fafafa;
   margin: -15px -15px 15px;
   padding: 15px 15px 10px;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 .node canvas {
