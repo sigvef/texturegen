@@ -3,7 +3,8 @@
 
   class SubtractNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Subtract', ['A', 'B']);
+      super(id, 'Subtract', [new TextureGen.GraphInput({name: 'A'}),
+                             new TextureGen.GraphInput({name: 'B'})]);
     }
 
     render() {

@@ -66,10 +66,12 @@
       }
       this.nodes[id].domNode.classList.add('selected');
       for(var key in this.nodes[id].inputs) {
-        if(!this.nodes[id].inputs[key]) {
+        if(this.nodes[id].inputs[key] instanceof TextureGen.GraphInput) {
           continue;
         }
-        this.moveNodeToFront(this.nodes[id].inputs[key].id);
+        if(this.nodes[id].inputs[key].value) {
+          this.moveNodeToFront(this.nodes[id].inputs[key].value.id);
+        }
       }
       for(var key in this.nodes[id].outputs) {
         if(!this.nodes[id].outputs[key]) {
@@ -83,18 +85,18 @@
 
     disconnect(id, inputName) {
       var node = this.nodes[id];
-      var outputNode = node.inputs[inputName];
+      var outputNode = node.inputs[inputName].value;
       if(outputNode) {
         delete outputNode.outputs[id + '-' + inputName];
       }
-      delete node.inputs[inputName];
+      node.inputs[inputName].setValue(undefined);
     }
 
     connect(fromId, toId, inputName) {
       var fromNode = this.nodes[fromId];
       var toNode = this.nodes[toId];
       this.disconnect(toId, inputName);
-      toNode.inputs[inputName] = fromNode;
+      toNode.inputs[inputName].setValue(fromNode);
       fromNode.outputs[toId + '-' + inputName] = toNode;
       toNode.dirty = true;
       toNode.render();
@@ -111,14 +113,12 @@
         serializable.left = node.domNode.style.left;
         serializable.top = node.domNode.style.top;
         serializable.width = node.domNode.style.width;
-        var hasNoInputs = true;
         for(var key in node.inputs) {
-          hasNoInputs = false;
-          serializable.inputs[key] = node.inputs[key] ? node.inputs[key].id
-                                                      : undefined;
-        }
-        if(hasNoInputs) {
-          serializable.value = node.getOutput();
+          if(node.inputs[key] instanceof TextureGen.GraphInput) {
+            serializable.inputs[key] = node.inputs[key].value.id
+          } else {
+            serializable.inputs[key] = node.inputs[key].getOutput();
+          }
         }
         jsonNodes.push(serializable);
       }
@@ -147,11 +147,12 @@
       for(var i = 0; i < data.nodes.length; i++) {
         var serializedNode = data.nodes[i];
         var node = this.nodes[serializedNode.id];
-        if(serializedNode.value) {
-          node.setValue(serializedNode.value);
-        }
         for(var key in serializedNode.inputs) {
-          this.connect(serializedNode.inputs[key], node.id, key);
+          if(node.inputs[key] instanceof TextureGen.GraphInput) {
+            this.connect(serializedNode.inputs[key], node.id, key);
+          } else {
+            node.inputs[key].setValue(serializedNode.inputs[key]);
+          }
         }
         node.domNode.style.left = serializedNode.left;
         node.domNode.style.top = serializedNode.top;

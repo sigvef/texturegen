@@ -3,7 +3,13 @@
 
   class SineNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Sine', ['periods']);
+      super(id, 'Sine', [new TextureGen.NumberInput({
+        name: 'periods',
+        min: 0,
+        max: 256,
+        step: 0.01,
+        default: 5
+      })]);
     }
 
     render() {

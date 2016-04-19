@@ -110,7 +110,7 @@ html, body {
 
 input {
   border: 1px solid #ccc;
-  width: calc(100% - 83px);
+  width: calc(100% - 30px);
   padding: 15px;
   height : 20px;
   display: inline-block;
@@ -186,4 +186,14 @@ canvas.connecting-lines {
 
 .node-classes-container li:last-child {
   padding-bottom: 8px;
+}
+
+.node .inputs .input .widget {
+  display: none;
+  position: relative;
+  width: 200px;
+  padding: 15px;
+  background: white;
+  margin-left: -215px;
+  border: 1px solid #ccc;
 }

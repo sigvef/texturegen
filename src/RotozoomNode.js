@@ -3,7 +3,44 @@
 
   class RotozoomNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Rotozoom', ['Image', 'Angle', 'TranslateX', 'TranslateY', 'ScaleX', 'ScaleY']);
+      super(id, 'Rotozoom', [
+        new TextureGen.GraphInput({name: 'Image'}),
+        new TextureGen.NumberInput({
+          name: 'Angle',
+          min: 0,
+          max: 360,
+          stop: 1,
+          default: 0
+        }),
+        new TextureGen.NumberInput({
+          name: 'TranslateX',
+          min: 0,
+          max: 512,
+          stop: 1,
+          default: 0
+        }),
+        new TextureGen.NumberInput({
+          name: 'TranslateY',
+          min: 0,
+          max: 512,
+          stop: 1,
+          default: 0
+        }),
+        new TextureGen.NumberInput({
+          name: 'ScaleX',
+          min: 0,
+          max: 128,
+          stop: 0.01,
+          default: 1
+        }),
+        new TextureGen.NumberInput({
+          name: 'ScaleY',
+          min: 0,
+          max: 128,
+          stop: 0.01,
+          default: 1
+        })
+      ]);
     }
 
     render() {

@@ -3,7 +3,16 @@
 
   class ThresholdNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Threshold', ['Image', 'Threshold']);
+      super(id, 'Threshold', [
+        new TextureGen.GraphInput({name: 'Image'}),
+        new TextureGen.NumberInput({
+          name: 'Threshold',
+          min: 0,
+          max: 255,
+          step: 1,
+          default: 127
+        })
+      ]);
     }
 
     render() {

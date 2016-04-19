@@ -3,7 +3,7 @@
 
   class BlurNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Blur', ['Image']);
+      super(id, 'Blur', [new TextureGen.GraphInput({name: 'Image'})]);
     }
 
     render() {

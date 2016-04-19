@@ -3,7 +3,7 @@
 
   class InvertNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Invert', ['Image']);
+      super(id, 'Invert', [new TextureGen.GraphInput({name: 'Image'})]);
     }
 
     render() {

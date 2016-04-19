@@ -28,16 +28,22 @@
   class CubePreviewNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'CubePreview', [
-        'map',
-        'lightmap',
-        'aomap',
-        'emissivemap',
-        'bumpmap',
-        'displacementmap',
-        'roughnessmap',
-        'metalnessmap',
-        'alphamap',
-        'repeat'
+        new TextureGen.GraphInput({name: 'map'}),
+        new TextureGen.GraphInput({name: 'lightmap'}),
+        new TextureGen.GraphInput({name: 'aomap'}),
+        new TextureGen.GraphInput({name: 'emissivemap'}),
+        new TextureGen.GraphInput({name: 'bumpmap'}),
+        new TextureGen.GraphInput({name: 'displacementmap'}),
+        new TextureGen.GraphInput({name: 'roughnessmap'}),
+        new TextureGen.GraphInput({name: 'metalnessmap'}),
+        new TextureGen.GraphInput({name: 'alphamap'}),
+        new TextureGen.NumberInput({
+          name: 'repeat',
+          min: 1,
+          max: 16,
+          step: 1,
+          default: 1
+        })
       ]);
 
       this.map = makeMapBundle();

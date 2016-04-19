@@ -8,22 +8,20 @@
   }
 
   class BaseNode {
-    constructor(id, title, inputNames) {
+    constructor(id, title, inputs) {
       this.id = id;
       this.dirty = true;
-      if(!inputNames) {
-        throw 'Need input names!';
-      }
       this.inputs = {};
-      for(var i = 0; i < inputNames.length; i++) {
-        this.inputs[inputNames[i]] = undefined;
+      for(var i = 0; i < inputs.length; i++) {
+        this.inputs[inputs[i].options.name] = inputs[i];
+        inputs[i].node = this;
       }
       this.outputs = {};
       this.domNode = render([
         '<div class=node>',
         '<div class=id></div>',
         '<h1 class=title></h1>',
-        '<ul class=inputs></ul>',
+        '<div class=inputs></div>',
         '<div class=output><div class=icon>▷</div><p class=name>Output</p></div>',
         '</div>'
       ].join(''));
@@ -37,11 +35,8 @@
       var domInputs = this.domNode.querySelector('.inputs');
       this.domInputs = {};
       for(var key in this.inputs) {
-        var domInput = render('<li class=input><div class=icon>⎆</div><p class=name></p></li>');
-        domInput.querySelector('.name').innerText = key;
-        domInput.dataset.name = key;
-        domInputs.appendChild(domInput);
-        this.domInputs[key] = domInput;
+        domInputs.appendChild(this.inputs[key].domNode);
+        this.domInputs[key] = this.inputs[key].domNode;
       }
 
       var that = this;

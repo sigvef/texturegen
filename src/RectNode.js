@@ -3,7 +3,38 @@
 
   class RectNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Rect', ['x', 'y', 'w', 'h', 'fill', 'stroke']);
+      super(id, 'Rect', [
+        new TextureGen.NumberInput({
+          name: 'x',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 0
+        }),
+        new TextureGen.NumberInput({
+          name: 'y',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 0
+        }),
+        new TextureGen.NumberInput({
+          name: 'w',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 512
+        }),
+        new TextureGen.NumberInput({
+          name: 'h',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 512
+        }),
+        new TextureGen.GraphInput({name: 'fill'}),
+        new TextureGen.GraphInput({name: 'stroke'})
+      ]);
     }
 
     render() {

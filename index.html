@@ -12,6 +12,9 @@
 <script src=lib/perlin.js></script>
 <script src=src/texturegen-core.js></script>
 <script src=src/TextureGen.js></script>
+<script src=src/BaseInput.js></script>
+<script src=src/NumberInput.js></script>
+<script src=src/GraphInput.js></script>
 <script src=src/BaseValue.js></script>
 <script src=src/ColorValue.js></script>
 <script src=src/GradientValue.js></script>
@@ -115,7 +118,9 @@ interact('.input').dropzone({
 }).on('tap', function (event) {
   var toId = event.currentTarget.parentElement.parentElement.dataset.id;
   var inputName = event.currentTarget.dataset.name;
-  nodeManager.disconnect(toId, inputName);
+  if(nodeManager.nodes[toId].inputs[inputName] instanceof TextureGen.GraphInput) {
+    nodeManager.disconnect(toId, inputName);
+  }
 });
 
 
@@ -173,12 +178,12 @@ function renderConnectingLines() {
   for(var id in nodeManager.nodes) {
     var node = nodeManager.nodes[id];
     for(var key in node.inputs) {
-      if(!node.inputs[key]) {
+      if(!(node.inputs[key].value instanceof TextureGen.BaseNode)) {
         continue;
       }
 
       var inputRect = node.domInputs[key].getBoundingClientRect();
-      var outputRect = node.inputs[key].domOutput.getBoundingClientRect();
+      var outputRect = node.inputs[key].value.domOutput.getBoundingClientRect();
       var inputX = inputRect.left;
       var inputY = inputRect.top + inputRect.height / 2;
       var outputX = outputRect.right;

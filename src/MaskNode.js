@@ -3,7 +3,9 @@
 
   class MaskNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Mask', ['A', 'B', 'Mask']);
+      super(id, 'Mask', [new TextureGen.GraphInput({name: 'A'}),
+                         new TextureGen.GraphInput({name: 'B'}),
+                         new TextureGen.GraphInput({name: 'Mask'})]);
       this.type = 'MaskNode';
     }
 

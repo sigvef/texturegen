@@ -3,7 +3,21 @@
 
   class PerlinNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Perlin', ['freq.', 'octaves']);
+      super(id, 'Perlin', [
+        new TextureGen.NumberInput({
+          name: 'freq.',
+          min: 5,
+          max: 8,
+          step: 1,
+          default: 7
+        }),
+        new TextureGen.NumberInput({
+          name: 'octaves',
+          min: 1,
+          max: 5,
+          step: 1,
+          default: 5
+        })]);
     }
 
     render() {
