@@ -400,27 +400,6 @@ var texturegen = {};
     return tmpCtx.getImageData(0, 0, imageData.width, imageData.height);
   }
 
-  texturegen.rotate = function(imageData, rotateRepeat) {
-    rotateRepeat = rotateRepeat || 1;
-    imageData = clone(imageData);
-    var tmpCanvas = document.createElement('canvas');
-    tmpCanvas.width = imageData.width;
-    tmpCanvas.height = imageData.height;
-    var tmpCtx = tmpCanvas.getContext('2d');
-    tmpCtx.putImageData(imageData, 0, 0);
-
-    var canvas = document.createElement('canvas');
-    canvas.width = imageData.width;
-    canvas.height = imageData.height;
-    var ctx = canvas.getContext('2d');
-    ctx.save();
-    ctx.translate(imageData.width / 2, imageData.height / 2);
-    ctx.rotate(Math.PI / 2 * rotateRepeat);
-    ctx.drawImage(tmpCanvas, -imageData.width / 2, -imageData.height / 2);
-    ctx.restore();
-    return ctx.getImageData(0, 0, imageData.width, imageData.height);
-  };
-
   texturegen.invert = function(imageData) {
     imageData = clone(imageData);
     forEachPixel(imageData, function(x, y, r, g, b, a) {
