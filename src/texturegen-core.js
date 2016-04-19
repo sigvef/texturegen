@@ -6,6 +6,52 @@ var texturegen = {};
     return a + t * (b - a);
   }
 
+  function getPixelNearestNeighbor(imageData, x, y) {
+    x = Math.round(x + 0.5);
+    y = Math.round(y + 0.5);
+    x -= Math.floor(x / imageData.width) * imageData.width;
+    y -= Math.floor(y / imageData.height) * imageData.height;
+    var i = (y * imageData.width + x) * 4;
+    return {
+      r: imageData.data[i],
+      g: imageData.data[i + 1],
+      b: imageData.data[i + 2],
+      a: imageData.data[i + 3]};
+  }
+  
+  function getPixelLinear(imageData, x, y) {
+    x -= Math.floor(x / imageData.width) * imageData.width;
+    y -= Math.floor(y / imageData.height) * imageData.height;
+    var xMix = x - (x | 0);
+    var yMix = y - (y | 0);
+    var leftTopPixel = getPixelNearestNeighbor(imageData, x | 0, y | 0);
+    var rightTopPixel = getPixelNearestNeighbor(imageData, (x + 1) | 0, y | 0);
+    var leftBottomPixel = getPixelNearestNeighbor(imageData, x | 0, (y + 1) | 0);
+    var rightBottomPixel = getPixelNearestNeighbor(imageData, (x + 1) | 0, (y + 1) | 0);
+
+    var blendedTopPixel = {
+      r: lerp(leftTopPixel.r, rightTopPixel.r, xMix),
+      g: lerp(leftTopPixel.g, rightTopPixel.g, xMix),
+      b: lerp(leftTopPixel.b, rightTopPixel.b, xMix),
+      a: lerp(leftTopPixel.a, rightTopPixel.a, xMix)
+    };
+    var blendedBottomPixel = {
+      r: lerp(leftBottomPixel.r, rightBottomPixel.r, xMix),
+      g: lerp(leftBottomPixel.g, rightBottomPixel.g, xMix),
+      b: lerp(leftBottomPixel.b, rightBottomPixel.b, xMix),
+      a: lerp(leftBottomPixel.a, rightBottomPixel.a, xMix)
+    };
+
+    var blendedPixel = {
+      r: lerp(blendedTopPixel.r, blendedBottomPixel.r, yMix),
+      g: lerp(blendedTopPixel.g, blendedBottomPixel.g, yMix),
+      b: lerp(blendedTopPixel.b, blendedBottomPixel.b, yMix),
+      a: lerp(blendedTopPixel.a, blendedBottomPixel.a, yMix)
+    };
+
+    return blendedPixel;
+  }
+
   function forEachPixel(imageData, func) {
     var data = imageData.data;
     for (var x = 0; x < imageData.width; x++) {
@@ -47,6 +93,26 @@ var texturegen = {};
     });
     return imageData;
   }
+
+  texturegen.rotozoom = function (imageData, angle, translateX, translateY, scaleX, scaleY) {
+    var resultImageData = clone(imageData);
+    angle = angle / 180 * Math.PI;
+    forEachPixel(resultImageData, function(x, y) {
+      x -= imageData.width / 2;
+      y -= imageData.height / 2;
+      x += scaleX * translateX;
+      x += scaleY * translateY;
+      var rotozoomedX = scaleX * (Math.cos(angle) * x - Math.sin(angle) * y);
+      var rotozoomedY = scaleY * (Math.sin(angle) * x + Math.cos(angle) * y);
+      rotozoomedX -= scaleX * (Math.cos(angle) * translateX - Math.sin(angle) * translateY);
+      rotozoomedY -= scaleY * (Math.sin(angle) * translateX + Math.cos(angle) * translateY);
+      rotozoomedX += imageData.width / 2;
+      rotozoomedY += imageData.height / 2;
+      return getPixelLinear(imageData, rotozoomedX, rotozoomedY);
+    });
+    return resultImageData;
+  }
+
 
   texturegen.colorize = function add(imageData, gradientImageData) {
     var resultImageData = clone(imageData);
