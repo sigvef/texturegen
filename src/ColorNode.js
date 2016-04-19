@@ -37,10 +37,13 @@
     }
 
     setValue(color) {
-      if(typeof(color) == 'string') {
-        color = hexColorToRGB(color);
+      if (color.constructor.name == 'ColorValue') {
+        this.value = color.clone();
+      } else if(typeof(color) == 'string') {
+        this.value = hexColorToRGB(color);
+      } else {
+        this.value = new TextureGen.ColorValue(color.r, color.g, color.b, color.a);
       }
-      this.value = color.clone();
       this.colorPicker.ColorPickerSetColor(RGBColorToHex(this.value));
 
       for(var key in this.outputs) {
