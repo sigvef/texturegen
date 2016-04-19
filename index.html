@@ -94,7 +94,7 @@ var nodeManager = new TextureGen.NodeManager(editor);
 interact('.output').draggable({autoScroll: true});
 
 interact('.node').resizable({
-  edges: {bottom: false, left: true, right: true, top: false}
+  edges: {bottom: false, left: false, right: true, top: false}
 }).on('resizemove', function (event) {
     var target = event.target;
     var x = (parseFloat(target.dataset.x) || 0);
