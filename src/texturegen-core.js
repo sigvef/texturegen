@@ -413,4 +413,33 @@ var texturegen = {};
     return imageData;
   }
 
+  texturegen.swirl = function(imageData, angle) {
+    var W = imageData.width;
+    var H = imageData.height;
+    var swirlDegree = Math.max(0, Math.min(360, angle));
+    var K = swirlDegree / 3600;
+
+    resultImageData = clone(imageData);
+    forEachPixel(resultImageData, function(x, y) {
+      var adjustedX = x - W / 2 | 0;
+      var adjustedY = y - H / 2 | 0;
+
+      var radian = Math.atan2(adjustedY, adjustedX);
+      var radius = Math.sqrt(adjustedX * adjustedX + adjustedY * adjustedY);
+      var newX = radius * Math.cos(radian + K * radius) + W / 2;
+      var newY = radius * Math.sin(radian + K * radius) + H / 2;
+      newX = Math.min(W - 1, Math.max(0, newX)) | 0;
+      newY = Math.min(H - 1, Math.max(0, newY)) | 0;
+      var i = (newY * imageData.width + newX) * 4;
+
+      return {
+        r: imageData.data[i + 0],
+        g: imageData.data[i + 1],
+        b: imageData.data[i + 2],
+        a: imageData.data[i + 3]
+      };
+    });
+    return resultImageData;
+  };
+
 })();
