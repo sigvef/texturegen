@@ -1,4 +1,4 @@
-(function(TextureGen, jscolor) {
+(function(TextureGen, $) {
   'use strict';
 
   class GradientNode extends TextureGen.BaseNode {
@@ -6,18 +6,30 @@
       super(id, 'Gradient', []);
       this.type = 'GradientNode';
 
-      var input = document.createElement('input');
       var that = this;
-      this.input = input;
-      input.addEventListener('change', function() {
-        that.setValue(new TextureGen.GradientValue(0, 0, 512, 0, JSON.parse(input.value)));
+
+      this.widget = document.createElement('div');
+      this.widget.classList.add('gradient-widget-wrapper');
+      this.domNode.appendChild(this.widget);
+      this.domNode.style.minWidth = '551px';
+      var that = this;
+      setTimeout(function() {
+        $(that.widget).gradientPicker({
+          controlPoints: that.value.stops.map(function(stop) {
+            return `${stop.color} ${stop.offset * 100}%`;
+          }),
+          change: function(points, styles) {
+            that.setValue(new TextureGen.GradientValue(0, 0, 512, 0, points.map(function(el) {
+              return {offset: el.position, color: el.color};
+            })), true);
+          }
+        });
       });
       this.setValue(new TextureGen.GradientValue(0, 0, 512, 0, [
         {offset: 0, color: 'red'},
         {offset: 0.7, color: 'orange'},      
         {offset: 1, color: 'white'}
       ]));
-      this.domNode.appendChild(input);
     }
 
     setValue(gradient) {
@@ -32,7 +44,6 @@
           gradient.stops
         );
       }
-      this.input.value = JSON.stringify(gradient.stops);
 
       for(var key in this.outputs) {
         this.outputs[key].dirty = true;
@@ -46,4 +57,4 @@
   }
 
   TextureGen.GradientNode = GradientNode;
-})(TextureGen, jscolor);
+})(TextureGen, jQuery);
