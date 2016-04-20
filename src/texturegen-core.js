@@ -72,7 +72,7 @@ var texturegen = {};
     return new ImageData(clonedData, imageData.width, imageData.height);
   }
 
-  texturegen.fill = function fill(color) {
+  texturegen.fill = function(color) {
     imageData = new ImageData(512, 512);
     forEachPixel(imageData, function(x, y) {
       return color;
@@ -80,7 +80,7 @@ var texturegen = {};
     return imageData;
   };
 
-  texturegen.random = function random(imageData, seed, randomAlpha) {
+  texturegen.random = function(imageData, seed, randomAlpha) {
     /* ignore seed for now */
     imageData = clone(imageData);
     forEachPixel(imageData, function(x, y) {
@@ -94,7 +94,7 @@ var texturegen = {};
     return imageData;
   }
 
-  texturegen.rotozoom = function (imageData, angle, translateX, translateY, scaleX, scaleY) {
+  texturegen.rotozoom = function(imageData, angle, translateX, translateY, scaleX, scaleY) {
     var resultImageData = clone(imageData);
     angle = angle / 180 * Math.PI;
     forEachPixel(resultImageData, function(x, y) {
@@ -114,7 +114,7 @@ var texturegen = {};
   }
 
 
-  texturegen.colorize = function add(imageData, gradientImageData) {
+  texturegen.colorize = function(imageData, gradientImageData) {
     var resultImageData = clone(imageData);
     for (var i = 0; i < imageData.data.length; i += 4) {
       resultImageData.data[i] = gradientImageData.data[imageData.data[i] * 4];
@@ -125,7 +125,7 @@ var texturegen = {};
     return resultImageData;
   }
 
-  texturegen.add = function add(imageDataA, imageDataB) {
+  texturegen.add = function(imageDataA, imageDataB) {
     var imageData = clone(imageDataA);
     for (var i = 0; i < imageData.data.length; i++) {
       imageData.data[i] = Math.min(255, imageDataA.data[i] + imageDataB.data[i]);
@@ -133,7 +133,7 @@ var texturegen = {};
     return imageData;
   }
 
-  texturegen.mask = function mask(imageDataA, imageDataB, imageDataMask) {
+  texturegen.mask = function(imageDataA, imageDataB, imageDataMask) {
     var imageData = clone(imageDataA);
     for (var i = 0; i < imageData.data.length; i++) {
       imageData.data[i] = lerp(imageDataA.data[i],
@@ -143,7 +143,7 @@ var texturegen = {};
     return imageData;
   }
 
-  texturegen.subtract = function add(imageDataA, imageDataB) {
+  texturegen.subtract = function(imageDataA, imageDataB) {
     var imageData = clone(imageDataA);
     for (var i = 0; i < imageData.data.length; i++) {
       imageData.data[i] = Math.max(0, imageDataA.data[i] - imageDataB.data[i]);
@@ -151,7 +151,7 @@ var texturegen = {};
     return imageData;
   }
 
-  texturegen.multiply = function add(imageDataA, imageDataB) {
+  texturegen.multiply = function(imageDataA, imageDataB) {
     var imageData = clone(imageDataA);
     for (var i = 0; i < imageData.data.length; i++) {
       imageData.data[i] = Math.min(255, imageDataA.data[i] * imageDataB.data[i] / 255);
@@ -159,7 +159,7 @@ var texturegen = {};
     return imageData;
   }
 
-  texturegen.perlin = function perlin(imageData, freq, octs) {
+  texturegen.perlin = function(imageData, freq, octs) {
     imageData = clone(imageData);
     var size = imageData.width;
     freq = freq || 1 / 32;
@@ -181,7 +181,7 @@ var texturegen = {};
     return imageData;
   }
 
-  texturegen.convolution = function convolution(imageData, filter, factor, bias) {
+  texturegen.convolution = function(imageData, filter, factor, bias) {
     resultImageData = clone(imageData);
     filter = filter || [
        [0, 0, 0],
