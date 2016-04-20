@@ -3,7 +3,29 @@
 
   class CircularGradientNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'CircularGradient', ['x', 'y', 'radius']);
+      super(id, 'CircularGradient', [
+        new TextureGen.NumberInput({
+          name: 'x',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 256
+        }),
+        new TextureGen.NumberInput({
+          name: 'y',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 256
+        }),
+        new TextureGen.NumberInput({
+          name: 'radius',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 256
+        })
+      ]);
     }
 
     render() {

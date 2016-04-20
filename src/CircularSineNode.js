@@ -3,7 +3,29 @@
 
   class CircularSineNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'CircularSine', ['x', 'y', 'periods']);
+      super(id, 'CircularSine', [
+        new TextureGen.NumberInput({
+          name: 'x',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 256
+        }),
+        new TextureGen.NumberInput({
+          name: 'y',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 256
+        }),
+        new TextureGen.NumberInput({
+          name: 'periods',
+          min: 0,
+          max: 512,
+          step: 1,
+          default: 5
+        })
+      ]);
     }
 
     render() {

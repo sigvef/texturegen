@@ -3,7 +3,8 @@
 
   class ColorizeNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Colorize', ['Image', 'Gradient']);
+      super(id, 'Colorize', [new TextureGen.GraphInput({name: 'Image'}),
+                             new TextureGen.GraphInput({name: 'Gradient'})]);
       this.type = 'ColorizeNode';
     }
 

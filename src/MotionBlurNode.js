@@ -3,7 +3,16 @@
 
   class MotionBlurNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'MotionBlur', ['Image', 'Intensity']);
+      super(id, 'MotionBlur', [
+        new TextureGen.GraphInput({name: 'Image'}),
+        new TextureGen.NumberInput({
+          name: 'Intensity',
+          min: 0,
+          max: 1,
+          step: 0.01,
+          default: 0.5
+        })
+      ]);
     }
 
     render() {

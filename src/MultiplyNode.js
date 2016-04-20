@@ -3,7 +3,8 @@
 
   class MultiplyNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Multiply', ['A', 'B']);
+      super(id, 'Multiply', [new TextureGen.GraphInput({name: 'A'}),
+                             new TextureGen.GraphInput({name: 'B'})]);
     }
 
     render() {

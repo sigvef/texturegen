@@ -5,7 +5,7 @@
 
   class LoadStoreNode extends TextureGen.BaseNode {
     constructor(id) {
-      super(id, 'LoadStore', ['Value']);
+      super(id, 'LoadStore', [new TextureGen.GraphInput({name: 'Value'})]);
       this.input = document.createElement('input');
       this.domNode.appendChild(this.input);
       this.input.classList.add('short');

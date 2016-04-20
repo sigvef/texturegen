@@ -3,7 +3,7 @@
 
   class EmbossNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Emboss', ['Image']);
+      super(id, 'Emboss', [new TextureGen.GraphInput({name: 'Image'})]);
     }
 
     render() {

@@ -3,7 +3,7 @@
 
   class PolarNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Polar', ['Image']);
+      super(id, 'Polar', [new TextureGen.GraphInput({name: 'Image'})]);
     }
 
     render() {

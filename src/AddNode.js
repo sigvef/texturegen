@@ -3,7 +3,8 @@
 
   class AddNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Add', ['A', 'B']);
+      super(id, 'Add', [new TextureGen.GraphInput({name: 'A'}),
+                        new TextureGen.GraphInput({name: 'B'})]);
     }
 
     render() {

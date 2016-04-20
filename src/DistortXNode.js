@@ -3,7 +3,11 @@
 
   class DistortXNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'DistortX', ['Image', 'Map', 'Amount']);
+      super(id, 'DistortX', [
+          new TextureGen.GraphInput({name: 'Image'}),
+          new TextureGen.GraphInput({name: 'Map'}),
+          new TextureGen.GraphInput({name: 'Amount'})
+      ]);
     }
 
     render() {
