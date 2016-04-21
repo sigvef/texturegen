@@ -35,8 +35,12 @@
     }
 
     setValue(value) {
-      this.numberInput.value = value;
-      this.rangeInput.value = value;
+      if (this.numberInput.value != value) {
+        this.numberInput.value = value;
+      }
+      if (this.rangeInput.value != value) {
+        this.rangeInput.value = value;
+      }
       this.node.dirty = true;
       this.node.render();
     }
