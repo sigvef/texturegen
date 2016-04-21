@@ -72,14 +72,6 @@ var texturegen = {};
     return new ImageData(clonedData, imageData.width, imageData.height);
   }
 
-  texturegen.fill = function(color) {
-    imageData = new ImageData(512, 512);
-    forEachPixel(imageData, function(x, y) {
-      return color;
-    });
-    return imageData;
-  };
-
   texturegen.random = function(imageData, seed, randomAlpha) {
     /* ignore seed for now */
     imageData = clone(imageData);
