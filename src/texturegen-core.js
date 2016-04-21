@@ -393,7 +393,7 @@ var texturegen = {};
     tmpCanvas.width = imageData.width;
     tmpCanvas.height = imageData.height;
     var tmpCtx = tmpCanvas.getContext('2d');
-    tpmCtx.fillStyle = 'white';
+    tmpCtx.fillStyle = 'white';
     tmpCtx.fillRect(0, 0, tmpCanvas.width, tmpCanvas.height);
     tmpCtx.fillStyle = fillStyle;
     tmpCtx.strokeStyle = strokeStyle;
