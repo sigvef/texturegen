@@ -9,35 +9,35 @@
           name: 'Angle',
           min: 0,
           max: 360,
-          stop: 1,
+          step: 1,
           default: 0
         }),
         new TextureGen.NumberInput({
           name: 'TranslateX',
           min: 0,
           max: 512,
-          stop: 1,
+          step: 1,
           default: 0
         }),
         new TextureGen.NumberInput({
           name: 'TranslateY',
           min: 0,
           max: 512,
-          stop: 1,
+          step: 1,
           default: 0
         }),
         new TextureGen.NumberInput({
           name: 'ScaleX',
           min: 0,
           max: 128,
-          stop: 0.01,
+          step: 0.01,
           default: 1
         }),
         new TextureGen.NumberInput({
           name: 'ScaleY',
           min: 0,
           max: 128,
-          stop: 0.01,
+          step: 0.01,
           default: 1
         })
       ]);
