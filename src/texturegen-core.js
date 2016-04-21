@@ -413,7 +413,20 @@ var texturegen = {};
       };
     });
     return imageData;
-  }
+  };
+
+  texturegen.blendNormal = function(imageDataA, imageDataB) {
+    var imageData = clone(imageDataA);
+    for (var i = 0; i < imageData.data.length; i+=4) {
+      var alpha = imageDataB.data[i + 3] / 255;
+      imageData.data[i] = imageDataB.data[i] * alpha + imageDataA.data[i] * (1 - alpha);
+      imageData.data[i + 1] = imageDataB.data[i + 1] * alpha + imageDataA.data[i + 1] * (1 - alpha);
+      imageData.data[i + 2] = imageDataB.data[i + 2] * alpha + imageDataA.data[i + 2] * (1 - alpha);
+      imageData.data[i + 3] = Math.max(imageDataA.data[i + 3], imageDataB.data[i + 3]);
+    }
+    return imageData;
+  };
+
 
   texturegen.swirl = function(imageData, angle) {
     var W = imageData.width;
