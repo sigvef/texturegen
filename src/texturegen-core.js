@@ -72,7 +72,7 @@ var texturegen = {};
     return new ImageData(clonedData, imageData.width, imageData.height);
   }
 
-  texturegen.random = function(imageData, seed, randomAlpha) {
+  texturegen.random = function(imageData, seed) {
     /* ignore seed for now */
     imageData = clone(imageData);
     forEachPixel(imageData, function(x, y) {
@@ -80,7 +80,7 @@ var texturegen = {};
         r: Math.random() * 255 | 0,
         g: Math.random() * 255 | 0,
         b: Math.random() * 255 | 0,
-        a: randomAlpha ? Math.random() * 255 | 0 : 255
+        a: 255
       };
     });
     return imageData;
@@ -119,8 +119,11 @@ var texturegen = {};
 
   texturegen.add = function(imageDataA, imageDataB) {
     var imageData = clone(imageDataA);
-    for (var i = 0; i < imageData.data.length; i++) {
+    for (var i = 0; i < imageData.data.length; i += 4) {
       imageData.data[i] = Math.min(255, imageDataA.data[i] + imageDataB.data[i]);
+      imageData.data[i + 1] = Math.min(255, imageDataA.data[i + 1] + imageDataB.data[i + 1]);
+      imageData.data[i + 2] = Math.min(255, imageDataA.data[i + 2] + imageDataB.data[i + 2]);
+      imageData.data[i + 3] = Math.max(imageDataA.data[i + 3], imageDataB.data[i + 3]);
     }
     return imageData;
   }
@@ -137,16 +140,22 @@ var texturegen = {};
 
   texturegen.subtract = function(imageDataA, imageDataB) {
     var imageData = clone(imageDataA);
-    for (var i = 0; i < imageData.data.length; i++) {
+    for (var i = 0; i < imageData.data.length; i += 4) {
       imageData.data[i] = Math.max(0, imageDataA.data[i] - imageDataB.data[i]);
+      imageData.data[i + 1] = Math.max(0, imageDataA.data[i + 1] - imageDataB.data[i + 1]);
+      imageData.data[i + 2] = Math.max(0, imageDataA.data[i + 2] - imageDataB.data[i + 2]);
+      imageData.data[i + 3] = imageDataA.data[i + 3];
     }
     return imageData;
   }
 
   texturegen.multiply = function(imageDataA, imageDataB) {
     var imageData = clone(imageDataA);
-    for (var i = 0; i < imageData.data.length; i++) {
+    for (var i = 0; i < imageData.data.length; i += 4) {
       imageData.data[i] = Math.min(255, imageDataA.data[i] * imageDataB.data[i] / 255);
+      imageData.data[i + 1] = Math.min(255, imageDataA.data[i + 1] * imageDataB.data[i + 1] / 255);
+      imageData.data[i + 2] = Math.min(255, imageDataA.data[i + 2] * imageDataB.data[i + 2] / 255);
+      imageData.data[i + 3] = Math.max(imageDataA.data[i + 3], imageDataB.data[i + 3]);
     }
     return imageData;
   }
@@ -287,7 +296,7 @@ var texturegen = {};
         r: r > threshold ? 255 : 0,
         g: g > threshold ? 255 : 0,
         b: b > threshold ? 255 : 0,
-        a: a > threshold ? 255 : 0
+        a: a
       };
     });
     return imageData;
@@ -384,7 +393,8 @@ var texturegen = {};
     tmpCanvas.width = imageData.width;
     tmpCanvas.height = imageData.height;
     var tmpCtx = tmpCanvas.getContext('2d');
-    tmpCtx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
+    tpmCtx.fillStyle = 'white';
+    tmpCtx.fillRect(0, 0, tmpCanvas.width, tmpCanvas.height);
     tmpCtx.fillStyle = fillStyle;
     tmpCtx.strokeStyle = strokeStyle;
     tmpCtx.fillRect(x, y, w, h);
