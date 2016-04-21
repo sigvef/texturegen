@@ -115,7 +115,8 @@
         serializable.width = node.domNode.style.width;
         for(var key in node.inputs) {
           if(node.inputs[key] instanceof TextureGen.GraphInput) {
-            serializable.inputs[key] = node.inputs[key].value.id
+            serializable.inputs[key] = node.inputs[key].value ? node.inputs[key].value.id
+                                                              : undefined;
           } else {
             serializable.inputs[key] = node.inputs[key].getOutput();
           }
