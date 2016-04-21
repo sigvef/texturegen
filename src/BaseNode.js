@@ -19,6 +19,7 @@
       this.outputs = {};
       this.domNode = render([
         '<div class=node>',
+        '<div class=delete>X</div>',
         '<div class=id></div>',
         '<h1 class=title></h1>',
         '<div class=inputs></div>',

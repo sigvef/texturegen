@@ -222,6 +222,11 @@ editor.addEventListener('mousedown', function(e) {
       nodeManager.selectNode(target.dataset.id);
       return;
     }
+    if (target.classList.contains('delete')) {
+      var nodeId = target.parentElement.dataset.id;
+      nodeManager.deleteNode(nodeId);
+      return;
+    }
     target = target.parentElement;
   }
 });
