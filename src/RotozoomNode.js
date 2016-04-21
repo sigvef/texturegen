@@ -27,14 +27,14 @@
           default: 0
         }),
         new TextureGen.NumberInput({
-          name: 'ScaleX',
+          name: 'RepeatX',
           min: 0,
           max: 128,
           stop: 0.01,
           default: 1
         }),
         new TextureGen.NumberInput({
-          name: 'ScaleY',
+          name: 'RepeatY',
           min: 0,
           max: 128,
           stop: 0.01,
@@ -51,9 +51,9 @@
       var angle = +this.getInput('Angle') || 0;
       var translateX = +this.getInput('TranslateX') || 0;
       var translateY = +this.getInput('TranslateY') || 0;
-      var scaleX = +this.getInput('ScaleX') || 1;
-      var scaleY = +this.getInput('ScaleY') || 1;
-      this.imageData = texturegen.rotozoom(input, angle, translateX, translateY, scaleX, scaleY);
+      var repeatX = +this.getInput('RepeatX') || 1;
+      var repeatY = +this.getInput('RepeatY') || 1;
+      this.imageData = texturegen.rotozoom(input, angle, translateX, translateY, repeatX, repeatY);
       this.ctx.putImageData(this.imageData, 0, 0);
       this.dirty = false;
 
