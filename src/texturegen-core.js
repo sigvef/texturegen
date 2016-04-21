@@ -86,18 +86,18 @@ var texturegen = {};
     return imageData;
   }
 
-  texturegen.rotozoom = function(imageData, angle, translateX, translateY, scaleX, scaleY) {
+  texturegen.rotozoom = function(imageData, angle, translateX, translateY, repeatX, repeatY) {
     var resultImageData = clone(imageData);
     angle = angle / 180 * Math.PI;
     forEachPixel(resultImageData, function(x, y) {
       x -= imageData.width / 2;
       y -= imageData.height / 2;
-      x += scaleX * translateX;
-      x += scaleY * translateY;
-      var rotozoomedX = scaleX * (Math.cos(angle) * x - Math.sin(angle) * y);
-      var rotozoomedY = scaleY * (Math.sin(angle) * x + Math.cos(angle) * y);
-      rotozoomedX -= scaleX * (Math.cos(angle) * translateX - Math.sin(angle) * translateY);
-      rotozoomedY -= scaleY * (Math.sin(angle) * translateX + Math.cos(angle) * translateY);
+      x += repeatX * translateX;
+      x += repeatY * translateY;
+      var rotozoomedX = repeatX * (Math.cos(angle) * x - Math.sin(angle) * y);
+      var rotozoomedY = repeatY * (Math.sin(angle) * x + Math.cos(angle) * y);
+      rotozoomedX -= repeatX * (Math.cos(angle) * translateX - Math.sin(angle) * translateY);
+      rotozoomedY -= repeatY * (Math.sin(angle) * translateX + Math.cos(angle) * translateY);
       rotozoomedX += imageData.width / 2;
       rotozoomedY += imageData.height / 2;
       return getPixelLinear(imageData, rotozoomedX, rotozoomedY);
