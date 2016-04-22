@@ -52,7 +52,7 @@
         var inputName = key.split('-')[1];
         this.disconnect(node.outputs[key].id, inputName);
       }
-      if (node.domNode.classList.contains('selected')) {
+      if(node.id == this.selectedNode) {
         this.selectedNode = -1;
       }
       this.editorDom.removeChild(node.domNode);
