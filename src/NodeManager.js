@@ -43,6 +43,28 @@
       return node;
     }
 
+    deleteNode(id) {
+      var node = this.nodes[id];
+      for (var key in node.inputs) {
+        this.disconnect(node.id, key);
+      }
+      for (var key in node.outputs) {
+        var inputName = key.split('-')[1];
+        this.disconnect(node.outputs[key].id, inputName);
+      }
+      if (node.domNode.classList.contains('selected')) {
+        this.selectedNode = -1;
+      }
+      this.editorDom.removeChild(node.domNode);
+      for (var i = 0; i < this.nodeZStack.length; i++) {
+        if (this.nodeZStack[i] == node) {
+          this.nodeZStack.splice(i, 1);
+          break;
+        }
+      }
+      delete this.nodes[node.id];
+    }
+
     moveNodeToFront(id, shouldUpdateCss) {
       var node = this.nodes[id];
       for(var i = 0; i < this.nodeZStack.length; i++) {

@@ -37,7 +37,26 @@ html, body {
   position: absolute;
   color: #ccc;
   top: 15px;
+  right: 40px;
+}
+
+.node .delete {
+  position: absolute;
+  top: 13px;
   right: 10px;
+  width: 20px;
+  height: 19px;
+  padding-top: 1px;
+  text-align: center;
+  color: #555;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 50%;
+}
+
+.node.selected .delete {
+  color: white;
 }
 
 .node h1 {
