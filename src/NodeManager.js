@@ -183,7 +183,9 @@
         node.dirty = true;
         node.render();
       }
-      this.selectNode(data.selectedNode);
+      if(data.selectedNode != -1) {
+        this.selectNode(data.selectedNode);
+      }
       var that = this;
       this.nodeZStack = data.zStack.map(function(id) {
         return that.nodes[id];
