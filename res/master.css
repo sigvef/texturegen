@@ -59,6 +59,16 @@ html, body {
   color: white;
 }
 
+.node .delete:hover {
+  background: #555;
+  color: white;
+}
+
+.node.selected .delete:hover {
+  background: white;
+  color: #28f;
+}
+
 .node h1 {
   border-bottom: 1px solid #ccc;
   background: #fafafa;
