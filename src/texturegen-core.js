@@ -457,4 +457,17 @@ var texturegen = {};
     return resultImageData;
   };
 
+  texturegen.sobel = function(imageData) {
+    var canvas = document.createElement("canvas");
+    canvas.width = imageData.width;
+    canvas.height = imageData.height;
+    var sobelImage = cvCreateImage(imageData.width, imageData.height);
+    sobelImage.imageData = imageData;
+    sobelImage.RGBA = imageData.data;
+    sobelImage.canvas = canvas;
+    cvCvtColor(sobelImage, sobelImage, CV_CODE.RGB2GRAY);
+    cvSobel(sobelImage, sobelImage, 1, 0);
+    return sobelImage.imageData;
+  }
+
 })();
