@@ -32,8 +32,14 @@
           step: 1,
           default: 512
         }),
-        new TextureGen.GraphInput({name: 'fill'}),
-        new TextureGen.GraphInput({name: 'stroke'})
+        new TextureGen.ColorInput({
+          name: 'fill',
+          default: '000000'
+        }),
+        new TextureGen.ColorInput({
+          name: 'stroke',
+          default: '000000'
+        })
       ]);
     }
 
@@ -46,8 +52,8 @@
       var y = this.getInput('y') || 0;
       var w = this.getInput('w') || 512;
       var h = this.getInput('h') || 512;
-      var fill = (this.getInput('fill') || new TextureGen.ColorValue(0, 0, 0, 255)).toCanvasStyle();
-      var stroke = (this.getInput('stroke') || new TextureGen.ColorValue(0, 0, 0, 255)).toCanvasStyle();
+      var fill = new TextureGen.ColorValue(this.getInput('fill')).toCanvasStyle();
+      var stroke = new TextureGen.ColorValue(this.getInput('stroke')).toCanvasStyle();
 
       this.imageData = texturegen.rect(this.imageData, x, y, w, h, fill, stroke);
       this.ctx.putImageData(this.imageData, 0, 0);
