@@ -19,7 +19,7 @@
     return (r + g + b).toUpperCase();
   }
 
-  class ColorNode extends TextureGen.BaseNode {
+  class ColorNode extends TextureGen.ValueNode {
     constructor(id) {
       super(id, 'Color', []);
 
@@ -50,10 +50,6 @@
         this.outputs[key].dirty = true;
         this.outputs[key].render();
       }
-    }
-
-    getOutput() {
-      return this.value.clone();
     }
   }
 

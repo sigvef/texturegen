@@ -137,6 +137,9 @@
         serializable.left = node.domNode.style.left;
         serializable.top = node.domNode.style.top;
         serializable.width = node.domNode.style.width;
+        if (node instanceof TextureGen.ValueNode) {
+          serializable.value = node.getOutput();
+        }
         for(var key in node.inputs) {
           if(node.inputs[key] instanceof TextureGen.GraphInput) {
             serializable.inputs[key] = node.inputs[key].value ? node.inputs[key].value.id
@@ -172,6 +175,9 @@
       for(var i = 0; i < data.nodes.length; i++) {
         var serializedNode = data.nodes[i];
         var node = this.nodes[serializedNode.id];
+        if (serializedNode.value) {
+          node.setValue(serializedNode.value);
+        }
         for(var key in serializedNode.inputs) {
           if(node.inputs[key] instanceof TextureGen.GraphInput) {
             this.connect(serializedNode.inputs[key], node.id, key);
