@@ -36,6 +36,7 @@
             {name: 'Cylinder', value: 'CylinderGeometry'},
             {name: 'Torus', value: 'TorusGeometry'},
             {name: 'TorusKnot', value: 'TorusKnotGeometry'},
+            {name: 'Plane', value: 'PlaneGeometry'}
           ]
         }),
         new TextureGen.GraphInput({name: 'map'}),
@@ -74,7 +75,9 @@
       this.camera.position.z = 500;
       this.model = new THREE.Mesh(
           new THREE.BoxGeometry(200, 200, 200),
-          new THREE.MeshStandardMaterial());
+          new THREE.MeshStandardMaterial({
+            side: THREE.DoubleSide
+          }));
       this.scene.add(this.model);
       var light = new THREE.SpotLight(0xFFFFFF, 1);
       light.position.set(500, 500, 500);
@@ -140,6 +143,9 @@
           break;
         case 'TorusKnotGeometry':
           var geometry = new THREE.TorusKnotGeometry();
+          break;
+        case 'PlaneGeometry':
+          var geometry = new THREE.PlaneGeometry(2, 2);
           break;
         default:
           var geometry = new THREE.BoxGeometry(200, 200, 200);
