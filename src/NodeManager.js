@@ -180,6 +180,8 @@
         node.domNode.style.left = serializedNode.left;
         node.domNode.style.top = serializedNode.top;
         node.domNode.style.width = serializedNode.width;
+        node.domNode.dataset.x = serializedNode.left;
+        node.domNode.dataset.y = serializedNode.top;
         node.dirty = true;
         node.render();
       }
