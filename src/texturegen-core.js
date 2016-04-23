@@ -387,6 +387,20 @@ var texturegen = {};
     return imageData;
   }
 
+  texturegen.brick = function(imageData) {
+    var canvas = document.createElement('canvas');
+    canvas.width = imageData.width;
+    canvas.height = imageData.height;
+    var size = canvas.width / 64;
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, imageData.width, size);
+    ctx.fillRect(0, imageData.height / 2, imageData.width, size);
+    ctx.fillRect(imageData.width / 2, 0, size, imageData.height / 2);
+    ctx.fillRect(0, imageData.height / 2, size, imageData.height / 2);
+    return ctx.getImageData(0, 0, canvas.width, canvas.height);
+  }
+
   texturegen.rect = function(imageData, x, y, w, h, fillStyle, strokeStyle) {
     imageData = clone(imageData);
     var tmpCanvas = document.createElement('canvas');
