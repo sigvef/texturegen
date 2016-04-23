@@ -72,7 +72,7 @@
       this.renderer.setSize(512, 512);
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
-      this.camera.position.z = 500;
+      this.camera.position.z = 5;
       this.model = new THREE.Mesh(
           new THREE.BoxGeometry(200, 200, 200),
           new THREE.MeshStandardMaterial({
@@ -130,25 +130,25 @@
       var geometryName = this.getInput('geometry');
       switch (geometryName) {
         case 'BoxGeometry':
-          var geometry = new THREE.BoxGeometry(200, 200, 200);
+          var geometry = new THREE.BoxGeometry(2, 2, 2);
           break;
         case 'SphereGeometry':
-          var geometry = new THREE.SphereGeometry(100, 32, 32);
+          var geometry = new THREE.SphereGeometry(1.5, 32, 32);
           break;
         case 'CylinderGeometry':
-          var geometry = new THREE.CylinderGeometry(100, 100, 200, 32);
+          var geometry = new THREE.CylinderGeometry(1, 1, 2, 32);
           break;
         case 'TorusGeometry':
-          var geometry = new THREE.TorusGeometry(100, 40, 16, 32);
+          var geometry = new THREE.TorusGeometry(1, 0.5, 16, 32);
           break;
         case 'TorusKnotGeometry':
-          var geometry = new THREE.TorusKnotGeometry();
+          var geometry = new THREE.TorusKnotGeometry(1, 0.5);
           break;
         case 'PlaneGeometry':
           var geometry = new THREE.PlaneGeometry(2, 2);
           break;
         default:
-          var geometry = new THREE.BoxGeometry(200, 200, 200);
+          var geometry = new THREE.BoxGeometry(2, 2, 2);
       }
 
       this.model.geometry = geometry;
