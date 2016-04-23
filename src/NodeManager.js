@@ -90,10 +90,8 @@
       }
       this.nodes[id].domNode.classList.add('selected');
       for(var key in this.nodes[id].inputs) {
-        if(this.nodes[id].inputs[key] instanceof TextureGen.GraphInput) {
-          continue;
-        }
-        if(this.nodes[id].inputs[key].value) {
+        if(this.nodes[id].inputs[key] instanceof TextureGen.GraphInput &&
+           this.nodes[id].inputs[key].value) {
           this.moveNodeToFront(this.nodes[id].inputs[key].value.id);
         }
       }
