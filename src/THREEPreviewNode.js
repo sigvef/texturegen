@@ -29,6 +29,13 @@
     constructor(id) {
       super(id, 'THREEPreview', [
         new TextureGen.ChoiceInput({
+          name: 'Rotate',
+          choices: [
+            {name: 'Yes', value: 'yes', selected: true},
+            {name: 'No', value: 'no'}
+          ]
+        }),
+        new TextureGen.ChoiceInput({
           name: 'geometry',
           choices: [
             {name: 'Box', value: 'BoxGeometry', selected: true},
@@ -72,6 +79,8 @@
       this.renderer.setSize(512, 512);
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
+      this.controls = new THREE.TrackballControls(this.camera, this.canvas);
+      this.controls.rotateSpeed = 5;
       this.camera.position.z = 5;
       this.model = new THREE.Mesh(
           new THREE.BoxGeometry(200, 200, 200),
@@ -92,8 +101,12 @@
       var that = this;
       function internalRenderLoop() {
           requestAnimationFrame(internalRenderLoop);
-          that.model.rotation.x += 0.01;
-          that.model.rotation.y += 0.02;
+          if(that.getInput('Rotate') == 'yes') {
+            that.model.rotation.x += 0.01;
+            that.model.rotation.y += 0.02;
+          }
+          that.controls.handleResize();
+          that.controls.update();
           that.renderer.render(that.scene, that.camera);
           that.ctx.drawImage(that.renderer.domElement, 0, 0);
       }
