@@ -112,7 +112,7 @@ var texturegen = {};
       resultImageData.data[i] = gradientImageData.data[imageData.data[i] * 4];
       resultImageData.data[i + 1] = gradientImageData.data[imageData.data[i] * 4 + 1];
       resultImageData.data[i + 2] = gradientImageData.data[imageData.data[i] * 4 + 2];
-      resultImageData.data[i + 3] = gradientImageData.data[imageData.data[i] * 4 + 3];
+      resultImageData.data[i + 3] = imageData.data[i + 3];
     }
     return resultImageData;
   }
