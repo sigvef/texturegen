@@ -1,12 +1,9 @@
 (function(TextureGen, $) {
   'use strict';
 
-  class GradientNode extends TextureGen.BaseNode {
+  class GradientNode extends TextureGen.ValueNode {
     constructor(id) {
       super(id, 'Gradient', []);
-      this.type = 'GradientNode';
-
-      var that = this;
 
       this.widget = document.createElement('div');
       this.widget.classList.add('gradient-widget-wrapper');
@@ -19,15 +16,15 @@
             return `${stop.color} ${stop.offset * 100}%`;
           }),
           change: function(points, styles) {
-            that.setValue(new TextureGen.GradientValue(0, 0, 512, 0, points.map(function(el) {
+            that.setValue(new TextureGen.GradientValue(0, 0, 512, 0, points.map(function(el) {
               return {offset: el.position, color: el.color};
             })), true);
           }
         });
       });
-      this.setValue(new TextureGen.GradientValue(0, 0, 512, 0, [
+      this.setValue(new TextureGen.GradientValue(0, 0, 512, 0, [
         {offset: 0, color: 'red'},
-        {offset: 0.7, color: 'orange'},      
+        {offset: 0.7, color: 'orange'},
         {offset: 1, color: 'white'}
       ]));
     }
@@ -49,10 +46,6 @@
         this.outputs[key].dirty = true;
         this.outputs[key].render();
       }
-    }
-
-    getOutput() {
-      return this.value.clone();
     }
   }
 
