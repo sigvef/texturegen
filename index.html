@@ -164,7 +164,9 @@ document.querySelector('.export-button').addEventListener('click', function() {
 
 document.querySelector('.import-button').addEventListener('click', function() {
   var json = prompt('json?');
-  nodeManager.importData(json);
+  if (json !== null) {
+    nodeManager.importData(json);
+  }
 });
 
 document.querySelector('.save-button').addEventListener('click', function() {
