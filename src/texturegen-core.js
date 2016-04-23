@@ -472,6 +472,7 @@ var texturegen = {};
   };
 
   texturegen.sobel = function(imageData) {
+    imageData = clone(imageData);
     var canvas = document.createElement("canvas");
     canvas.width = imageData.width;
     canvas.height = imageData.height;
