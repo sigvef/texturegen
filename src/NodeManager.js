@@ -46,7 +46,9 @@
     deleteNode(id) {
       var node = this.nodes[id];
       for (var key in node.inputs) {
-        this.disconnect(node.id, key);
+        if (this.nodes[id].inputs[key] instanceof TextureGen.GraphInput) {
+          this.disconnect(node.id, key);
+        }
       }
       for (var key in node.outputs) {
         var inputName = key.split('-')[1];
