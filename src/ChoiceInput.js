@@ -33,7 +33,6 @@
     setValue(value) {
       this.select.value = value;
       this.node.dirty = true;
-      this.node.render();
     }
   }
 

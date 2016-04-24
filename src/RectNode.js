@@ -1,6 +1,28 @@
 (function(TextureGen) {
   'use strict';
 
+var shader = `
+precision mediump float;
+varying vec2 v_position;
+varying vec2 v_texCoord;
+uniform float u_x;
+uniform float u_y;
+uniform float u_w;
+uniform float u_h;
+uniform vec3 u_fill;
+
+void main() {
+  vec3 color = vec3(1.);
+  if(v_texCoord.x > u_x / 512. &&
+     v_texCoord.x < (u_x + u_w) / 512. &&
+     1. - v_texCoord.y > u_y / 512. &&
+     1. - v_texCoord.y < (u_y + u_h) / 512.) {
+    color = u_fill;
+  }
+  gl_FragColor = vec4(color, 1.);
+}
+`;
+
   class RectNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Rect', [
@@ -35,34 +57,8 @@
         new TextureGen.ColorInput({
           name: 'fill',
           default: '000000'
-        }),
-        new TextureGen.ColorInput({
-          name: 'stroke',
-          default: '000000'
         })
-      ]);
-    }
-
-    render() {
-      if(!this.dirty) {
-        return;
-      }
-
-      var x = this.getInput('x') || 0;
-      var y = this.getInput('y') || 0;
-      var w = this.getInput('w') || 512;
-      var h = this.getInput('h') || 512;
-      var fill = new TextureGen.ColorValue(this.getInput('fill')).toCanvasStyle();
-      var stroke = new TextureGen.ColorValue(this.getInput('stroke')).toCanvasStyle();
-
-      this.imageData = texturegen.rect(this.imageData, x, y, w, h, fill, stroke);
-      this.ctx.putImageData(this.imageData, 0, 0);
-      this.dirty = false;
-
-      for(var key in this.outputs) {
-        this.outputs[key].dirty = true;
-        this.outputs[key].render();
-      }
+      ], shader);
     }
   }
 

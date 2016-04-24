@@ -1,6 +1,21 @@
 (function(TextureGen) {
   'use strict';
 
+var shader = `
+precision mediump float;
+uniform float u_x;
+uniform float u_y;
+uniform float u_radius;
+varying vec2 v_position;
+varying vec2 v_texCoord;
+
+void main() {
+  vec2 position = v_position + 0.5 - vec2(u_x, u_y) / 512.;
+  float distance = u_radius / 256. * sqrt(dot(position, position));
+  gl_FragColor = vec4(vec3(1. - distance), 1.);
+}
+`;
+
   class CircularGradientNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'CircularGradient', [
@@ -25,24 +40,7 @@
           step: 1,
           default: 256
         })
-      ]);
-    }
-
-    render() {
-      if(!this.dirty) {
-        return;
-      }
-      var x = this.getInput('x') || 256;
-      var y = this.getInput('y') || 256;
-      var radius = this.getInput('radius') || 256;
-      this.imageData = texturegen.circularGradient(this.imageData, x, y, radius);
-      this.ctx.putImageData(this.imageData, 0, 0);
-      this.dirty = false;
-
-      for(var key in this.outputs) {
-        this.outputs[key].dirty = true;
-        this.outputs[key].render();
-      }
+      ], shader);
     }
   }
 

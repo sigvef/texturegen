@@ -1,6 +1,22 @@
 (function(TextureGen) {
   'use strict';
 
+var shader = `
+precision mediump float;
+varying vec2 v_position;
+varying vec2 v_texCoord;
+uniform sampler2D u_Image;
+uniform float u_Threshold;
+
+void main() {
+  float threshold = u_Threshold / 255.;
+  vec4 color = texture2D(u_Image, v_texCoord);
+  float gray = (color.r + color.g + color.b) / 3.;
+  float value = gray >= threshold ? 1. : 0.;
+  gl_FragColor = vec4(vec3(value), 1.);
+}
+`;
+
   class ThresholdNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Threshold', [
@@ -12,23 +28,7 @@
           step: 1,
           default: 127
         })
-      ]);
-    }
-
-    render() {
-      if(!this.dirty) {
-        return;
-      }
-      var image = this.getInput('Image') || new ImageData(512, 512);
-      var amount = this.getInput('Threshold') || 127;
-      this.imageData = texturegen.threshold(image, amount);
-      this.ctx.putImageData(this.imageData, 0, 0);
-      this.dirty = false;
-
-      for(var key in this.outputs) {
-        this.outputs[key].dirty = true;
-        this.outputs[key].render();
-      }
+      ], shader);
     }
   }
 

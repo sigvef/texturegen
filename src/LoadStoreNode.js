@@ -12,7 +12,6 @@
       var that = this;
       this.input.addEventListener('change', function() {
         that.dirty = true; 
-        that.render();
       });
     }
 
@@ -34,7 +33,6 @@
       this.dirty = false;
       for(var key in this.outputs) {
         this.outputs[key].dirty = true;
-        this.outputs[key].render();
       }
     }
   }

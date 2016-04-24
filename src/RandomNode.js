@@ -1,24 +1,23 @@
 (function(TextureGen) {
   'use strict';
 
+var shader = `
+precision mediump float;
+varying vec2 v_position;
+varying vec2 v_texCoord;
+
+float rand(vec2 co){
+  return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
+void main() {
+  gl_FragColor = vec4(vec3(rand(v_texCoord)), 1.);
+}
+`;
+
   class RandomNode extends TextureGen.CanvasNode {
     constructor(id) {
-      super(id, 'Random', []);
-    }
-
-    render() {
-      if(!this.dirty) {
-        return;
-      }
-
-      this.imageData = texturegen.random(this.imageData);
-      this.ctx.putImageData(this.imageData, 0, 0);
-      this.dirty = false;
-
-      for(var key in this.outputs) {
-        this.outputs[key].dirty = true;
-        this.outputs[key].render();
-      }
+      super(id, 'Random', [], shader);
     }
   }
 

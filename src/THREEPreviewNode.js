@@ -19,13 +19,13 @@
     if(!input) {
       return;
     }
-    bundle.ctx.putImageData(input, 0, 0);
+    bundle.ctx.drawImage(input, 0, 0);
     bundle.texture.repeat.set(repeat, repeat);
     bundle.texture.needsUpdate = true;
     return bundle.texture;
   }
 
-  class THREEPreviewNode extends TextureGen.CanvasNode {
+  class THREEPreviewNode extends TextureGen.BaseNode {
     constructor(id) {
       super(id, 'THREEPreview', [
         new TextureGen.ChoiceInput({
@@ -79,7 +79,7 @@
       this.renderer.setSize(512, 512);
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
-      this.controls = new THREE.TrackballControls(this.camera, this.canvas);
+      this.controls = new THREE.TrackballControls(this.camera, this.renderer.domElement);
       this.controls.rotateSpeed = 5;
       this.camera.position.z = 5;
       this.model = new THREE.Mesh(
@@ -97,6 +97,7 @@
       this.scene.add(sun);
       this.scene.add(new THREE.AmbientLight(0x222222));
       this.model.rotation.set(1, 1, 1);
+      this.domNode.appendChild(this.renderer.domElement);
 
       var that = this;
       function internalRenderLoop() {
@@ -108,7 +109,6 @@
           that.controls.handleResize();
           that.controls.update();
           that.renderer.render(that.scene, that.camera);
-          that.ctx.drawImage(that.renderer.domElement, 0, 0);
       }
       internalRenderLoop();
     }
@@ -117,6 +117,7 @@
       if(!this.dirty) {
         return;
       }
+      this.dirty = false;
       var material = new THREE.MeshStandardMaterial({color: 0xFFFFFF});
       var repeat = this.getInput('repeat') || 1;
       material.map = updateMapBundle(
@@ -165,15 +166,6 @@
       }
 
       this.model.geometry = geometry;
-
-      this.ctx.drawImage(this.renderer.domElement, 0, 0);
-      this.imageData = this.ctx.getImageData(0, 0, 512, 512);
-      this.dirty = false;
-
-      for(var key in this.outputs) {
-        this.outputs[key].dirty = true;
-        this.outputs[key].render();
-      }
     }
   }
 

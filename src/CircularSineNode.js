@@ -1,6 +1,24 @@
 (function(TextureGen) {
   'use strict';
 
+var shader = `
+precision mediump float;
+varying vec2 v_position;
+varying vec2 v_texCoord;
+uniform float u_x;
+uniform float u_y;
+uniform float u_periods;
+
+#define PI 3.1415926535897932384626433832795
+
+void main() {
+   vec2 offset = v_position - vec2(u_x / 256. - 1., 1. - u_y / 256.);
+   float distance = sqrt(offset.x * offset.x + offset.y * offset.y);
+   float amount = (1. + sin(u_periods * distance * PI * 2.)) * .5;
+   gl_FragColor = vec4(vec3(amount), 1.);
+}
+`;
+
   class CircularSineNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'CircularSine', [
@@ -25,24 +43,7 @@
           step: 1,
           default: 5
         })
-      ]);
-    }
-
-    render() {
-      if(!this.dirty) {
-        return;
-      }
-      var x = this.getInput('x') || 256;
-      var y = this.getInput('y') || 256;
-      var periods = this.getInput('periods') || 5;
-      this.imageData = texturegen.circularSine(this.imageData, x, y, periods);
-      this.ctx.putImageData(this.imageData, 0, 0);
-      this.dirty = false;
-
-      for(var key in this.outputs) {
-        this.outputs[key].dirty = true;
-        this.outputs[key].render();
-      }
+      ], shader);
     }
   }
 
