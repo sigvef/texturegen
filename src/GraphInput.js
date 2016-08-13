@@ -15,7 +15,6 @@
     setValue(value) {
       this.value = value;
       this.node.dirty = true;
-      this.node.render();
     }
   }
 

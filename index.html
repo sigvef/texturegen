@@ -3,6 +3,7 @@
 <link rel=stylesheet type=text/css href=res/master.css>
 <link rel=stylesheet type=text/css href=lib/jquery-gradient-picker/jquery.gradientPicker.css>
 <link rel=stylesheet type=text/css href=lib/jquery-gradient-picker/jqPlugins/colorpicker/css/colorpicker.css>
+<script src=lib/webgl-utils.js></script>
 <script src=lib/jquery-gradient-picker/jquery.js></script>
 <script src=lib/jquery-gradient-picker/jqueryUI-custom.js></script>
 <script src=lib/jquery-gradient-picker/jqPlugins/colorpicker/js/colorpicker.js></script>
@@ -10,9 +11,6 @@
 <script src=lib/interact.js></script>
 <script src=lib/three.js></script>
 <script src=lib/TrackballControls.js></script>
-<script src=lib/perlin.js></script>
-<script src=lib/opencv.js></script>
-<script src=src/texturegen-core.js></script>
 <script src=src/TextureGen.js></script>
 <script src=src/BaseInput.js></script>
 <script src=src/NumberInput.js></script>
@@ -36,19 +34,15 @@
 <script src=src/MaskNode.js></script>
 <script src=src/RandomNode.js></script>
 <script src=src/BlurNode.js></script>
-<script src=src/EmbossNode.js></script>
-<script src=src/MotionBlurNode.js></script>
-<script src=src/DistortXNode.js></script>
+<script src=src/DistortNode.js></script>
 <script src=src/ThresholdNode.js></script>
 <script src=src/CircularGradientNode.js></script>
 <script src=src/SineNode.js></script>
 <script src=src/CircularSineNode.js></script>
-<script src=src/PolarNode.js></script>
 <script src=src/PatternNode.js></script>
 <script src=src/SwirlNode.js></script>
 <script src=src/InvertNode.js></script>
 <script src=src/THREEPreviewNode.js></script>
-<script src=src/SobelNode.js></script>
 
 <div class=ui-button-container>
   <a class="save-button ui-button">Save</a>
@@ -58,24 +52,20 @@
   <ul class=node-classes-container>
     <li data-type=BlendNode>Blend</li>
     <li data-type=BlurNode>Blur</li>
-    <li data-type=PatternNode>Pattern</li>
     <li data-type=CircularGradientNode>CircularGradient</li>
     <li data-type=CircularSineNode>CircularSine</li>
     <li data-type=ColorizeNode>Colorize</li>
-    <li data-type=DistortXNode>DistortX</li>
-    <li data-type=EmbossNode>Emboss</li>
+    <li data-type=DistortNode>Distort</li>
     <li data-type=GradientNode>Gradient</li>
     <li data-type=InvertNode>Invert</li>
     <li data-type=LoadStoreNode>LoadStore</li>
     <li data-type=MaskNode>Mask</li>
-    <li data-type=MotionBlurNode>MotionBlur</li>
+    <li data-type=PatternNode>Pattern</li>
     <li data-type=PerlinNode>Perlin</li>
-    <li data-type=PolarNode>Polar</li>
     <li data-type=RandomNode>Random</li>
     <li data-type=RectNode>Rect</li>
     <li data-type=RotozoomNode>Rotozoom</li>
     <li data-type=SineNode>Sine</li>
-    <li data-type=SobelNode>Sobel</li>
     <li data-type=SwirlNode>Swirl</li>
     <li data-type=ThresholdNode>Threshold</li>
     <li data-type=THREEPreviewNode>THREEPreview</li>

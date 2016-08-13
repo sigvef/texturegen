@@ -11,6 +11,7 @@
     constructor(id, title, inputs) {
       this.id = id;
       this.dirty = true;
+      this.orderedInputs = inputs;
       this.inputs = {};
       for(var i = 0; i < inputs.length; i++) {
         this.inputs[inputs[i].options.name] = inputs[i];
@@ -39,11 +40,6 @@
         domInputs.appendChild(this.inputs[key].domNode);
         this.domInputs[key] = this.inputs[key].domNode;
       }
-
-      var that = this;
-      setTimeout(function() {
-        that.render();
-      });
     }
 
     getInput(inputName) {

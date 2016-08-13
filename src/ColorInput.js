@@ -29,7 +29,6 @@
       this.value = value;
       this.colorPicker.ColorPickerSetColor(this.value);
       this.node.dirty = true;
-      this.node.render();
     }
 
     getOutput() {

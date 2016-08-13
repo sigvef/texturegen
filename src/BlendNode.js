@@ -1,51 +1,45 @@
 (function(TextureGen) {
   'use strict';
 
+var shader = `
+precision mediump float;
+uniform sampler2D u_A;
+uniform sampler2D u_B;
+uniform int u_mode;
+varying vec2 v_position;
+varying vec2 v_texCoord;
+
+void main() {
+   vec4 A = texture2D(u_A, v_texCoord);
+   vec4 B = texture2D(u_B, v_texCoord);
+   
+   if(u_mode == 0) {
+     gl_FragColor = vec4(A.rgb + B.rgb, max(A.a, B.a));
+   } else if(u_mode == 1) {
+     gl_FragColor = vec4(A.rgb * B.rgb, max(A.a, B.a));
+   } else if(u_mode == 2) {
+     gl_FragColor = vec4(A.rgb - B.rgb, max(A.a, B.a));
+   } else if(u_mode == 3) {
+     gl_FragColor = vec4(mix(A.rgb, B.rgb, A.a), max(A.a, B.a));
+   }
+}
+`;
+
   class BlendNode extends TextureGen.CanvasNode {
     constructor(id) {
       super(id, 'Blend', [
         new TextureGen.GraphInput({name: 'A'}),
         new TextureGen.GraphInput({name: 'B'}),
         new TextureGen.ChoiceInput({
-          name: 'Blendmode',
+          name: 'mode',
           choices: [
-            {name: 'Add', value: 'add', selected: true},
-            {name: 'Multiply', value: 'multiply'},
-            {name: 'Subtract', value: 'subtract'},
-            {name: 'Normal', value: 'normal'}
+            {name: 'Add', value: 0, selected: true},
+            {name: 'Multiply', value: 1},
+            {name: 'Subtract', value: 2},
+            {name: 'Normal', value: 3}
           ]
         })
-      ]);
-    }
-
-    render() {
-      if(!this.dirty) {
-        return;
-      }
-      var A = this.getInput('A') || new ImageData(512, 512);
-      var B = this.getInput('B') || new ImageData(512, 512);
-      var blendmode = this.getInput('Blendmode');
-      switch (blendmode) {
-        case 'subtract':
-          this.imageData = texturegen.subtract(A, B);
-          break;
-        case 'multiply':
-          this.imageData = texturegen.multiply(A, B);
-          break;
-        case 'normal':
-          this.imageData = texturegen.blendNormal(A, B);
-          break;
-        case 'add':
-        default:
-          this.imageData = texturegen.add(A, B);
-      }
-      this.ctx.putImageData(this.imageData, 0, 0);
-      this.dirty = false;
-
-      for(var key in this.outputs) {
-        this.outputs[key].dirty = true;
-        this.outputs[key].render();
-      }
+      ], shader);
     }
   }
 

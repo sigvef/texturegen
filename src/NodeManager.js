@@ -21,15 +21,28 @@
              TextureGen.LoadStore[node.input.value].updated) {
             TextureGen.LoadStore[node.input.value].updated = false;
             node.dirty = true;
-            node.render();
-            /* break after first found dirty load node to give
-             * control back to the browser as soon as possible. */
-            break;
           }
         }
         requestAnimationFrame(loadStoreDirtyCheckerLoop);
       }
       requestAnimationFrame(loadStoreDirtyCheckerLoop);
+
+      var that = this;
+      function nodeRenderLoop() {
+        for(var key in that.nodes) {
+          var node = that.nodes[key];
+          if(node.dirty) {
+            node.render();
+            node.dirty = false;
+            for(var key in node.outputs) {
+              node.outputs[key].dirty = true;
+            }
+            continue;
+          }
+        }
+        requestAnimationFrame(nodeRenderLoop);
+      }
+      requestAnimationFrame(nodeRenderLoop);
     }
 
     createNode(Node, optionalId) {
@@ -121,7 +134,6 @@
       toNode.inputs[inputName].setValue(fromNode);
       fromNode.outputs[toId + '-' + inputName] = toNode;
       toNode.dirty = true;
-      toNode.render();
     }
 
     exportData() {
@@ -189,7 +201,6 @@
         node.domNode.dataset.x = serializedNode.left;
         node.domNode.dataset.y = serializedNode.top;
         node.dirty = true;
-        node.render();
       }
       if(data.selectedNode != -1) {
         this.selectNode(data.selectedNode);
